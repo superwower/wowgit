@@ -1,0 +1,30 @@
+{
+  "name": "wowgit",
+  "version": "0.0.1",
+  "description": "A git web client that wows you",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "prestart": "npm run build",
+    "start": "next start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superwower/wowgit.git"
+  },
+  "keywords": ["git", "web"],
+  "author": "Super Wower",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/superwower/wowgit/issues"
+  },
+  "homepage": "https://github.com/superwower/wowgit#readme",
+  "dependencies": {
+    "fastify": "^1.7.0",
+    "next": "^6.1.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  }
+}
