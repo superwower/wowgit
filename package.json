@@ -4,7 +4,7 @@
   "description": "A git web client that wows you",
   "main": "index.js",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "node server/index.js",
     "build": "next build",
     "prestart": "npm run build",
     "start": "next start",
