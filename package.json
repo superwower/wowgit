@@ -2,7 +2,7 @@
   "name": "wowgit",
   "version": "0.0.1",
   "description": "A git web client that wows you",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "dev": "node server/index.js",
     "build": "next build",
