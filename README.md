@@ -2,8 +2,8 @@
 Git web client that wows you
 
 ## Requirements
-- Node.js >= 8.x
-- npm >= 5.x
+- Node.js >= 8.11.3
+- npm >= 6.1.0
 
 ## Installation
 
