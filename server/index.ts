@@ -1,4 +1,4 @@
-const Server = require('./interfaces');
+import { Server } from './interfaces';
 
 const server = new Server();
 server.start();

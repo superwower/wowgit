@@ -1,6 +1,6 @@
-const {parse} = require('url');
+import {parse} from 'url';
 
-const registerRoutes = (server, next) => {
+export const registerRoutes = (server, next) => {
   const nextHandler = next.getRequestHandler();
   server.register(require('./api'), {prefix: '/api'});
   server.all('/*', (req, res) => {
@@ -9,4 +9,3 @@ const registerRoutes = (server, next) => {
   });
 };
 
-module.exports = registerRoutes;

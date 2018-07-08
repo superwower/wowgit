@@ -1,19 +1,22 @@
-const Fastify = require('fastify');
-const Next = require('next');
-const registerRoutes = require('./router');
+import * as Fastify from "fastify";
+import * as Next from "next";
+import { registerRoutes } from "./router";
 
-const dev = process.env.NODE_ENV !== 'production';
-const next = Next({dev});
+const dev = process.env.NODE_ENV !== "production";
+const next = Next({ dev });
 
-class Server {
-  constructor(logger = true, address='0.0.0.0', port = 3000) {
+export class Server {
+  logger: any;
+  address: string;
+  port: number;
+  constructor(logger = true, address = "0.0.0.0", port = 3000) {
     this.logger = logger;
     this.port = port;
     this.address = address;
   }
   async start() {
     const fastify = Fastify({
-      logger: this.logger,
+      logger: this.logger
     });
     await next.prepare();
     registerRoutes(fastify, next);
@@ -25,5 +28,3 @@ class Server {
     });
   }
 }
-
-module.exports = Server;
