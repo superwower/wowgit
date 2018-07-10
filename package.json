@@ -14,7 +14,10 @@
     "type": "git",
     "url": "git+https://github.com/superwower/wowgit.git"
   },
-  "keywords": ["git", "web"],
+  "keywords": [
+    "git",
+    "web"
+  ],
   "author": "Super Wower",
   "license": "MIT",
   "bugs": {
@@ -26,5 +29,8 @@
     "next": "^6.1.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "now": "^11.2.8"
   }
 }
