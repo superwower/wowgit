@@ -1,6 +1,8 @@
 # wowgit
 Git web client that wows you
 
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 ## Requirements
 - Node.js >= 8.11.3
 - npm >= 6.1.0
