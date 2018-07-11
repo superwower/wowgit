@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "NODE_ENV=production node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write \"{**/*,*}.{js,ts,jsx,tsx}\""
+    "format": "prettier --write \"{**/*,*}.{js,ts,jsx,tsx}\"",
+    "lint": "tslint ./{*,**/*}.{ts,tsx}"
   },
   "repository": {
     "type": "git",
@@ -25,9 +26,11 @@
     "fastify": "^1.7.0",
     "next": "^6.1.1",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "typescript": "^2.9.2"
   },
   "devDependencies": {
-    "prettier": "^1.13.7"
+    "prettier": "^1.13.7",
+    "tslint": "^5.10.0"
   }
 }
