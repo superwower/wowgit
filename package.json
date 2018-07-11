@@ -2,13 +2,13 @@
   "name": "wowgit",
   "version": "0.0.1",
   "description": "A git web client that wows you",
-  "main": "server/index.js",
+  "main": "server/index.ts",
   "scripts": {
     "dev": "ts-node-dev --ignore-watch .next server/index.ts",
     "build": "npm run clean && npm run build:next",
     "build:next": "next build",
     "clean": "rm -rf .next",
-    "start": "ts-node server/index.ts",
+    "start": "NODE_ENV=production ts-node server/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "lint": "tslint ./{*,**/*}.{ts,tsx}"
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/superwower/wowgit#readme",
   "dependencies": {
+    "@types/next": "^6.0.4",
     "@zeit/next-typescript": "^1.1.0",
     "fastify": "^1.7.0",
     "next": "^6.1.1",

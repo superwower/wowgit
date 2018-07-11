@@ -6,18 +6,16 @@ const dev = process.env.NODE_ENV !== "production";
 const next = Next({ dev });
 
 export class Server {
-  logger: any;
+  options: Fastify.ServerOptions;
   address: string;
   port: number;
-  constructor(logger = true, address = "0.0.0.0", port = 3000) {
-    this.logger = logger;
+  constructor(options = { logger: true }, address = "0.0.0.0", port = 3000) {
+    this.options = options;
     this.port = port;
     this.address = address;
   }
   async start() {
-    const fastify = Fastify({
-      logger: this.logger
-    });
+    const fastify = Fastify(this.options);
     await next.prepare();
     registerRoutes(fastify, next);
     fastify.listen(this.port, this.address, (err, address) => {
