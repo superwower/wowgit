@@ -12,3 +12,6 @@ test:
 install:
 	$(DOCKER_WOWGIT) npm ci
 
+.PHONY: clean
+clean:
+	$(DOCKER_WOWGIT) npm run clean
