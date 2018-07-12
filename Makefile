@@ -1,4 +1,4 @@
-DOCKER_WOWGIT:=docker-compose -f docker-compose.dev.yml run wowgit
+DOCKER_WOWGIT:=docker-compose -f docker-compose.dev.yml run --service-ports wowgit
 
 .PHONY: dev
 dev:
