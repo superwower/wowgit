@@ -21,7 +21,7 @@ class Server {
       if (err) {
         throw err;
       }
-      console.log(`> Ready on http://${address}`);
+      console.log(`> Ready on ${address}`);
     });
   }
 }
