@@ -9,3 +9,6 @@ $(NPM_SCRIPTS): %:
 .PHONY: $(NPM_COMMANDS)
 $(NPM_COMMANDS): %:
 	$(DOCKER_WOWGIT) npm $@
+
+.PHONY: prod
+prod: clean install build start
