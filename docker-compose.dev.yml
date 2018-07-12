@@ -1,0 +1,9 @@
+version: '3' 
+services:
+    wowgit:
+        build: .
+        command: npm run dev
+        volumes:
+            - ./:/opt/wowgit
+        ports:
+            - 3000:3000
