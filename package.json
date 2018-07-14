@@ -2,11 +2,13 @@
   "name": "wowgit",
   "version": "0.0.1",
   "description": "A git web client that wows you",
-  "main": "server/index.js",
+  "main": "server/index.ts",
   "scripts": {
-    "dev": "node server/index.js",
-    "build": "next build",
-    "start": "NODE_ENV=production node server/index.js",
+    "dev": "ts-node-dev --ignore-watch .next server/index.ts",
+    "build": "npm run clean && npm run build:next",
+    "build:next": "next build",
+    "clean": "rm -rf .next",
+    "start": "NODE_ENV=production ts-node server/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "lint": "tslint ./{*,**/*}.{ts,tsx}"
@@ -15,7 +17,10 @@
     "type": "git",
     "url": "git+https://github.com/superwower/wowgit.git"
   },
-  "keywords": ["git", "web"],
+  "keywords": [
+    "git",
+    "web"
+  ],
   "author": "Super Wower",
   "license": "MIT",
   "bugs": {
@@ -23,14 +28,18 @@
   },
   "homepage": "https://github.com/superwower/wowgit#readme",
   "dependencies": {
+    "@types/next": "^6.0.4",
+    "@zeit/next-typescript": "^1.1.0",
     "fastify": "^1.7.0",
     "next": "^6.1.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "typescript": "^2.9.2"
+    "typescript": "^2.9.2",
+    "ts-node": "^7.0.0"
   },
   "devDependencies": {
     "prettier": "^1.13.7",
-    "tslint": "^5.10.0"
+    "tslint": "^5.10.0",
+    "ts-node-dev": "^1.0.0-pre.26"
   }
 }
