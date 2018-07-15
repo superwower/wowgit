@@ -1,6 +1,6 @@
 FROM node:8.11.3-alpine
 
-ENV NPM_VERSION 6.1.0
+ENV NPM_VERSION 6.2.0
 ENV APP_DIR /opt/wowgit
 
 RUN npm config set unsafe-perm true && npm i -g npm@${NPM_VERSION} && mkdir ${APP_DIR}
