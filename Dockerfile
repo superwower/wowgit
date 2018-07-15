@@ -7,7 +7,7 @@ RUN npm config set unsafe-perm true && npm i -g npm@${NPM_VERSION} && mkdir ${AP
 
 COPY . ${APP_DIR}/
 WORKDIR ${APP_DIR}
-RUN npm install --production && npm run build
+RUN npm ci --production && npm run build
 EXPOSE 3000
 
 CMD ["npm", "start"]
