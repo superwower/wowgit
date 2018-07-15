@@ -5,8 +5,9 @@
   "main": "server/index.ts",
   "scripts": {
     "dev": "ts-node-dev --ignore-watch .next server/index.ts",
-    "build": "npm run clean && npm run build:next",
+    "build": "npm run build:clean && npm run build:next",
     "build:next": "next build",
+    "build:clean": "rm -rf .next",
     "clean": "rm -rf node_modules .next",
     "start": "NODE_ENV=production ts-node server/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
