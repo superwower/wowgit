@@ -12,7 +12,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --list-different \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "format:fix": "prettier --write \"{**/*,*}.{js,ts,jsx,tsx}\"",
-    "lint": "npm run format && tslint ./{*,**/*}.{ts,tsx}"
+    "lint": "npm run format && tslint ./{*,**/*}.{ts,tsx}",
+    "husky-hooks": "npm run lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run husky-hooks",
+      "pre-push": "npm run husky-hooks"
+    }
   },
   "repository": {
     "type": "git",
@@ -39,8 +46,9 @@
     "ts-node": "^7.0.0"
   },
   "devDependencies": {
+    "husky": "^1.0.0-rc.13",
     "prettier": "^1.13.7",
-    "tslint": "^5.10.0",
-    "ts-node-dev": "^1.0.0-pre.26"
+    "ts-node-dev": "^1.0.0-pre.26",
+    "tslint": "^5.10.0"
   }
 }
