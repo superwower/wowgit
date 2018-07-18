@@ -3,7 +3,8 @@ import * as Next from "next";
 import { registerRoutes } from "./router";
 import { importSchema } from "graphql-import";
 import { makeExecutableSchema } from "graphql-tools";
-import * as path from "path";
+
+import resolvers from "./resolvers";
 
 const dev = process.env.NODE_ENV !== "production";
 const next = Next({ dev });
@@ -12,16 +13,20 @@ export class Server {
   private options: Fastify.ServerOptions;
   private address: string;
   private port: number;
-  constructor(options = { logger: true }, address = "0.0.0.0", port = 3000) {
-    this.options = options;
+  private schemaPath: string;
+  constructor(
+    serverOptions = { logger: true },
+    address = "0.0.0.0",
+    port = 3000,
+    schemaPath: string
+  ) {
+    this.options = serverOptions;
     this.port = port;
     this.address = address;
+    this.schemaPath = schemaPath;
   }
   public createGraphqlSchema() {
-    const typeDefs = importSchema(
-      path.join(__dirname, "schema", "index.graphql")
-    );
-    const resolvers = {};
+    const typeDefs = importSchema(this.schemaPath);
     const schema = makeExecutableSchema({ typeDefs, resolvers });
     return schema;
   }
