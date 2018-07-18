@@ -1,0 +1,9 @@
+# import Author from 'author.graphql'
+
+type Query {
+  authors: [Author]
+}
+
+type Mutation {
+  changeConfig: Boolean
+}
