@@ -1,16 +1,19 @@
 import * as path from "path";
 
-import { Server } from "./interfaces";
+import Server, { buildFastify } from "./interfaces";
+import resolvers from "./interfaces/resolvers";
 
-const serverOptions = { logger: true };
-const schemaPath = path.join(
-  __dirname,
-  "interfaces",
-  "schema",
-  "index.graphql"
-);
-const address = "0.0.0.0";
-const port = 3000;
+const main = async () => {
+  const schemaPath = path.join(
+    __dirname,
+    "interfaces",
+    "schema",
+    "index.graphql"
+  );
+  const dev = process.env.NODE_ENV !== "production";
+  const app = await buildFastify(schemaPath, resolvers, dev);
+  const server = new Server(app);
+  server.start();
+};
 
-const server = new Server(serverOptions, address, port, schemaPath);
-server.start();
+main();
