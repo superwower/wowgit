@@ -1,4 +1,5 @@
-export default {
+import { IResolvers } from "graphql-tools";
+const author: IResolvers = {
   Author: {
     name({ name }, args, context, info) {
       return name;
@@ -8,3 +9,5 @@ export default {
     }
   }
 };
+
+export default author;

@@ -30,7 +30,8 @@ export const buildFastify = async (
   fastify.register(graphqlFastify, {
     prefix: "/graphql",
     graphql: {
-      schema: graphqlSchema
+      schema: graphqlSchema,
+      context: {}
     }
   });
   fastify.register(graphiqlFastify, {

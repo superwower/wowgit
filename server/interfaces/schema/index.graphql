@@ -1,7 +1,9 @@
 # import Author from 'author.graphql'
+# import Status from 'status.graphql'
 
 type Query {
   authors: [Author]
+  status: Status
 }
 
 type Mutation {

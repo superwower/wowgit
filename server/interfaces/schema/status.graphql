@@ -1,0 +1,8 @@
+# import File from 'file.graphql'
+
+type Status {
+  untracked: [File]
+  renamed: [File]
+  modified: [File]
+  deleted: [File]
+}
