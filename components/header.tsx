@@ -1,24 +1,33 @@
+import Link from 'next/link'
+
 export default () => (
-  <div className="navbar is-transparent">
+  <div className="navbar is-primary">
     <div className="navbar-brand">
-      <a className="navbar-item" href="https://bulma.io">
-        <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28"></img>
-      </a>
+      <Link href="/">
+        <span className="navbar-item">
+          Wowgit
+        </span>
+      </Link>
     </div>
 
     <div className="navbar-menu">
       <div className="navbar-start">
-        <div className="navbar-item has-dropdown is-hoverable">
-          <a className="navbar-link" href="/documentation/overview/start/">
-            Docs
-          </a>
+      <div className="navbar-item has-dropdown is-hoverable">
+          <span className="navbar-link">
+            Repository
+          </span>
           <div className="navbar-dropdown is-boxed">
-            <a className="navbar-item" href="/documentation/overview/start/">
-              Overview
-            </a>
-            <a className="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">
-              Modifiers
-            </a>
+            <span className="navbar-item">Repo 1</span>
+            <span className="navbar-item">Repo 2</span>
+          </div>
+        </div>
+        <div className="navbar-item has-dropdown is-hoverable">
+          <span className="navbar-link">
+            Branch
+          </span>
+          <div className="navbar-dropdown is-boxed">
+            <span className="navbar-item">Branch 1</span>
+            <span className="navbar-item">Branch 2</span>
           </div>
         </div>
       </div>
