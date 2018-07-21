@@ -1,3 +1,4 @@
+import * as http from "http";
 import * as Fastify from "fastify";
 import { parse } from "url";
 import * as Next from "next";
@@ -43,11 +44,17 @@ export const buildFastify = async (
   const nextApp = Next({ dev });
   await nextApp.prepare();
   const nextHandler = nextApp.getRequestHandler();
-  // cast fastify to any until type definition for `all` is added
-  (<any>fastify).all("/*", (req, res) => {
-    const parsedUrl = parse(req.req.url, true);
-    nextHandler(req.req, res.res, parsedUrl);
-  });
+  // TODO: cast fastify to any until type definition for `all` is added
+  (<any>fastify).all(
+    "/*",
+    (
+      req: Fastify.FastifyRequest<http.IncomingMessage>,
+      res: Fastify.FastifyReply<http.ServerResponse>
+    ) => {
+      const parsedUrl = parse(req.req.url, true);
+      nextHandler(req.req, res.res, parsedUrl);
+    }
+  );
   return fastify;
 };
 
