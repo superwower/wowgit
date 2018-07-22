@@ -3,7 +3,15 @@ import Status from "../domain/status";
 import File from "../domain/file";
 import * as Git from "nodegit";
 
+/**
+ * Implementation of GitService with nodegit
+ */
 export default class NodeGitService implements GitService {
+  /**
+   * Get the status of a repostiory
+   * @param repositoryPath path to git repository path
+   * @return promise of Status object
+   */
   public async getStatus(repositoryPath: string): Promise<Status> {
     const repo = await Git.Repository.open(repositoryPath);
     const statusFiles = await repo.getStatus();
@@ -24,7 +32,6 @@ export default class NodeGitService implements GitService {
         statusDict.deleted.push(new File(file.path()));
       }
     }
-    console.log(statusDict);
     const {
       new: newFiles,
       modified: modifiedFiles,

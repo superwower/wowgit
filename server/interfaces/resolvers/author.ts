@@ -1,4 +1,5 @@
 import { IResolvers } from "graphql-tools";
+
 const author: IResolvers = {
   Author: {
     name({ name }, args, context, info) {
