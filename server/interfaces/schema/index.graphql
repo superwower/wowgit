@@ -3,7 +3,7 @@
 
 type Query {
   authors: [Author]
-  status: Status
+  status(path: String): Status
 }
 
 type Mutation {

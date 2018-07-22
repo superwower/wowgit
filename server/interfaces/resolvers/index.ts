@@ -15,9 +15,7 @@ const resolvers: IResolvers = {
       return _authors;
     },
     status(obj, args, context, info) {
-      return new StatusService(new NodeGitService()).getStatus(
-        "/home/hitochan/developer/wowgit"
-      );
+      return new StatusService(new NodeGitService()).getStatus(args.path);
     }
   }
 };
