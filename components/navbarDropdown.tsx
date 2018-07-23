@@ -1,13 +1,12 @@
 import * as React from "react";
 
-interface Props {
+interface IProps {
   title: string;
-  items: Array<string>;
+  items: string[];
 }
-interface State {}
 
-export default class NavbarDropdown extends React.Component<Props, State> {
-  render() {
+export default class NavbarDropdown extends React.Component<IProps> {
+  public render() {
     return (
       <div className="navbar-item has-dropdown is-hoverable">
         <span className="navbar-link">{this.props.title}</span>
