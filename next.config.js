@@ -1,7 +1,7 @@
 const withTypescript = require("@zeit/next-typescript");
-const webpack = require('webpack');
-const path = require('path');
-const glob = require('glob');
+const webpack = require("webpack");
+const path = require("path");
+const glob = require("glob");
 
 module.exports = withTypescript({
   webpack(config, options) {
@@ -9,25 +9,25 @@ module.exports = withTypescript({
     config.module.rules.push(
       {
         test: /\.(css|scss)/,
-        loader: 'emit-file-loader',
+        loader: "emit-file-loader",
         options: {
-          name: 'dist/[path][name].[ext]'
+          name: "dist/[path][name].[ext]"
         }
       },
       {
         test: /\.css$/,
-        use: ['babel-loader', 'raw-loader', 'postcss-loader']
+        use: ["babel-loader", "raw-loader", "postcss-loader"]
       },
       {
         test: /\.s(a|c)ss$/,
         use: [
-          'babel-loader',
-          'raw-loader',
-          'postcss-loader',
+          "babel-loader",
+          "raw-loader",
+          "postcss-loader",
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
             options: {
-              includePaths: ['styles', 'node_modules']
+              includePaths: ["styles", "node_modules"]
                 .map(d => path.join(__dirname, d))
                 .map(g => glob.sync(g))
                 .reduce((a, c) => a.concat(c), [])
@@ -36,6 +36,6 @@ module.exports = withTypescript({
         ]
       }
     );
-    return config
+    return config;
   }
-})
+});

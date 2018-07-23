@@ -1,5 +1,1 @@
-export default () => (
-  <div>
-    branchPane
-  </div>
-)
+export default () => <div>branchPane</div>;

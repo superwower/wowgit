@@ -1,5 +1,1 @@
-export default () => (
-  <div>
-    commitPane
-  </div>
-)
+export default () => <div>commitPane</div>;
