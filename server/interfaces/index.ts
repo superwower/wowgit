@@ -17,31 +17,37 @@ export const buildGraphqlSchema = (
   return schema;
 };
 
-export const buildFastify = async (
+export const registerGraphqlRouter = (
+  fastify: Fastify.FastifyInstance,
   schemaPath: string,
   resolvers: IResolvers[],
-  dev: boolean = false,
-  options: Fastify.ServerOptions = { logger: true }
-): Promise<Fastify.FastifyInstance> => {
-  const fastify = Fastify(options);
-
+  context?: { [key: string]: any },
+  graphqlPath: string = "/graphql",
+  graphiqlPath: string = "/graphiql"
+) => {
   // graphql routes
   const graphqlSchema = buildGraphqlSchema(schemaPath, resolvers);
   fastify.register(graphqlFastify, {
-    prefix: "/graphql",
+    prefix: graphqlPath,
     graphql: {
       schema: graphqlSchema,
-      context: {}
+      context
     }
   });
   fastify.register(graphiqlFastify, {
-    prefix: "/graphiql",
+    prefix: graphiqlPath,
     graphiql: {
-      endpointURL: "/graphql"
+      endpointURL: graphqlPath
     }
   });
+};
 
-  // next.js rotes
+export const registerNextjsRouter = async (
+  fastify: Fastify.FastifyInstance,
+  dev = true,
+  path = "/*"
+) => {
+  // next.js routes
   const nextApp = Next({ dev });
   await nextApp.prepare();
   const nextHandler = nextApp.getRequestHandler();
@@ -56,7 +62,12 @@ export const buildFastify = async (
       nextHandler(req.req, res.res, parsedUrl);
     }
   );
-  return fastify;
+};
+
+export const buildFastify = (
+  serverOptions: Fastify.ServerOptions = { logger: true }
+): Fastify.FastifyInstance => {
+  return Fastify(serverOptions);
 };
 
 export default class Server {

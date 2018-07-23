@@ -1,18 +1,33 @@
 import * as path from "path";
 
-import Server, { buildFastify } from "./interfaces";
+import Server, {
+  buildFastify,
+  registerNextjsRouter,
+  registerGraphqlRouter
+} from "./interfaces";
 import resolvers from "./interfaces/resolvers";
+import StatusService from "./app/status";
+import NodeGitService from "./infra/git_service";
 
-const main = async () => {
+export const main = async () => {
+  const fastify = await buildFastify();
+
   const schemaPath = path.join(
     __dirname,
     "interfaces",
     "schema",
     "index.graphql"
   );
+  const context = {
+    statusService: new StatusService(new NodeGitService())
+  };
+
+  registerGraphqlRouter(fastify, schemaPath, resolvers, context);
+
   const dev = process.env.NODE_ENV !== "production";
-  const app = await buildFastify(schemaPath, resolvers, dev);
-  const server = new Server(app);
+  await registerNextjsRouter(fastify, dev);
+
+  const server = new Server(fastify);
   server.start();
 };
 
