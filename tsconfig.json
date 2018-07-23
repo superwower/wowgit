@@ -1,4 +1,7 @@
 {
+  "typeRoots" : [
+    "typings"
+  ],
   "compileOnSave": false,
   "compilerOptions": {
     "target": "esnext",
