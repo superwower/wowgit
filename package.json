@@ -10,12 +10,19 @@
     "build:clean": "rm -rf .next",
     "clean": "rm -rf node_modules .next",
     "start": "NODE_ENV=production ts-node server/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run jest",
     "format": "prettier --list-different \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "format:fix": "prettier --write \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "lint": "npm run format && tslint ./{*,**/*}.{ts,tsx}",
     "jest": "jest",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "husky-hooks": "npm run lint && npm test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run husky-hooks",
+      "pre-push": "npm run husky-hooks"
+    }
   },
   "jest": {
     "transform": {
@@ -55,6 +62,7 @@
     "ts-node": "^7.0.0"
   },
   "devDependencies": {
+    "husky": "^1.0.0-rc.13",
     "@types/jest": "^23.1.6",
     "jest": "^23.4.1",
     "prettier": "^1.13.7",
