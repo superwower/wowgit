@@ -10,10 +10,32 @@
     "build:clean": "rm -rf .next",
     "clean": "rm -rf node_modules .next",
     "start": "NODE_ENV=production ts-node server/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run jest",
     "format": "prettier --list-different \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "format:fix": "prettier --write \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "lint": "npm run format && tslint -c tslint.json ./{*,**/*}.{ts,tsx}"
+    "jest": "jest",
+    "coverage": "jest --coverage",
+    "husky-hooks": "npm run lint && npm test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run husky-hooks",
+      "pre-push": "npm run husky-hooks"
+    }
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
   },
   "repository": {
     "type": "git",
@@ -40,8 +62,12 @@
     "ts-node": "^7.0.0"
   },
   "devDependencies": {
+    "husky": "^1.0.0-rc.13",
+    "@types/jest": "^23.1.6",
+    "jest": "^23.4.1",
     "prettier": "^1.13.7",
-    "tslint": "^5.10.0",
-    "ts-node-dev": "^1.0.0-pre.26"
+    "ts-jest": "^23.0.0",
+    "ts-node-dev": "^1.0.0-pre.26",
+    "tslint": "^5.10.0"
   }
 }
