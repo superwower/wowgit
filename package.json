@@ -13,7 +13,7 @@
     "test": "npm run jest",
     "format": "prettier --list-different \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "format:fix": "prettier --write \"{**/*,*}.{js,ts,jsx,tsx}\"",
-    "lint": "npm run format && tslint ./{*,**/*}.{ts,tsx}",
+    "lint": "npm run format && tslint -c tslint.json ./{*,**/*}.{ts,tsx}",
     "jest": "jest",
     "coverage": "jest --coverage",
     "husky-hooks": "npm run lint && npm test"
