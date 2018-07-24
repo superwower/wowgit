@@ -58,16 +58,17 @@
     "next": "^6.1.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "typescript": "^2.9.2",
-    "ts-node": "^7.0.0"
+    "ts-node": "^7.0.0",
+    "typescript": "^2.9.2"
   },
   "devDependencies": {
-    "husky": "^1.0.0-rc.13",
     "@types/jest": "^23.1.6",
+    "husky": "^1.0.0-rc.13",
     "jest": "^23.4.1",
     "prettier": "^1.13.7",
     "ts-jest": "^23.0.0",
     "ts-node-dev": "^1.0.0-pre.26",
-    "tslint": "^5.10.0"
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.14.0"
   }
 }
