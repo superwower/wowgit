@@ -1,12 +1,10 @@
-import * as http from "http";
 import * as Fastify from "fastify";
-import { parse } from "url";
-import * as Next from "next";
-import { importSchema } from "graphql-import";
-import { makeExecutableSchema, IResolvers } from "graphql-tools";
 import { graphiqlFastify, graphqlFastify } from "fastify-graphql";
-
-import resolvers from "./resolvers";
+import { importSchema } from "graphql-import";
+import { IResolvers, makeExecutableSchema } from "graphql-tools";
+import * as http from "http";
+import * as Next from "next";
+import { parse } from "url";
 
 export const buildGraphqlSchema = (
   schemaPath: string,
@@ -28,17 +26,17 @@ export const registerGraphqlRouter = (
   // graphql routes
   const graphqlSchema = buildGraphqlSchema(schemaPath, resolvers);
   fastify.register(graphqlFastify, {
-    prefix: graphqlPath,
     graphql: {
-      schema: graphqlSchema,
-      context
-    }
+      context,
+      schema: graphqlSchema
+    },
+    prefix: graphqlPath
   });
   fastify.register(graphiqlFastify, {
-    prefix: graphiqlPath,
     graphiql: {
       endpointURL: graphqlPath
-    }
+    },
+    prefix: graphiqlPath
   });
 };
 
@@ -52,7 +50,7 @@ export const registerNextjsRouter = async (
   await nextApp.prepare();
   const nextHandler = nextApp.getRequestHandler();
   // TODO: cast fastify to any until type definition for `all` is added
-  (<any>fastify).all(
+  (fastify as any).all(
     "/*",
     (
       req: Fastify.FastifyRequest<http.IncomingMessage>,

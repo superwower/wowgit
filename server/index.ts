@@ -1,13 +1,13 @@
 import * as path from "path";
 
-import Server, {
-  buildFastify,
-  registerNextjsRouter,
-  registerGraphqlRouter
-} from "./interfaces";
-import resolvers from "./interfaces/resolvers";
 import StatusService from "./app/status";
 import NodeGitService from "./infra/git_service";
+import Server, {
+  buildFastify,
+  registerGraphqlRouter,
+  registerNextjsRouter
+} from "./interfaces";
+import resolvers from "./interfaces/resolvers";
 
 export const main = async () => {
   const fastify = await buildFastify();

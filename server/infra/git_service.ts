@@ -1,12 +1,13 @@
-import GitService from "../domain/git_service";
-import Status from "../domain/status";
-import File from "../domain/file";
 import * as Git from "nodegit";
+
+import File from "../domain/file";
+import IGitService from "../domain/git_service";
+import Status from "../domain/status";
 
 /**
  * Implementation of GitService with nodegit
  */
-export default class NodeGitService implements GitService {
+export default class NodeGitService implements IGitService {
   /**
    * Get the status of a repostiory
    * @param repositoryPath path to git repository path
@@ -16,12 +17,12 @@ export default class NodeGitService implements GitService {
     const repo = await Git.Repository.open(repositoryPath);
     const statusFiles = await repo.getStatus();
     const statusDict = {
-      new: [],
+      deleted: [],
       modified: [],
-      renamed: [],
-      deleted: []
+      new: [],
+      renamed: []
     };
-    for (let file of statusFiles) {
+    for (const file of statusFiles) {
       if (file.isNew()) {
         statusDict.new.push(new File(file.path()));
       } else if (file.isModified()) {

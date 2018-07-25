@@ -1,7 +1,7 @@
-import Status from "../../domain/status";
+import StatusService from "../../app/status";
 import File from "../../domain/file";
 import GitService from "../../domain/git_service";
-import StatusService from "../../app/status";
+import Status from "../../domain/status";
 import resolver from "./root";
 
 class MockGitService implements GitService {

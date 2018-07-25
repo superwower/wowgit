@@ -3,7 +3,7 @@ import Status from "./status";
 /**
  * An interface that access the status of git repository.
  */
-export default interface GitService {
+export default interface IGitService {
   /**
    * Get the status of a repostiory
    * @param repositoryPath path to git repository path

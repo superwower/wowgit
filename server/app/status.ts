@@ -1,8 +1,8 @@
-import Status from "../domain/status";
-import File from "../domain/file";
 import * as Git from "nodegit";
 
+import File from "../domain/file";
 import GitService from "../domain/git_service";
+import Status from "../domain/status";
 
 /**
  * A service that access the status of git repository.
@@ -13,7 +13,7 @@ export default class StatusService {
 
   /**
    * @param gitService an instance of class that implements GitService. Used to access git repository.
-     @return
+   * @return
    */
   constructor(gitService: GitService) {
     this.gitService = gitService;
