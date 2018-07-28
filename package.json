@@ -35,7 +35,8 @@
       "js",
       "jsx",
       "json"
-    ]
+    ],
+    "testURL": "http://localhost/"
   },
   "repository": {
     "type": "git",
