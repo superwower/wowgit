@@ -35,7 +35,8 @@
       "js",
       "jsx",
       "json"
-    ]
+    ],
+    "testURL": "http://localhost/"
   },
   "repository": {
     "type": "git",
@@ -53,17 +54,23 @@
   "homepage": "https://github.com/superwower/wowgit#readme",
   "dependencies": {
     "@types/next": "^6.0.4",
+    "@types/nodegit": "^0.22.3",
     "@zeit/next-typescript": "^1.1.0",
     "autoprefixer": "^9.0.0",
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-wrap-in-js": "^1.1.1",
     "bulma": "^0.7.1",
     "fastify": "^1.7.0",
+    "fastify-graphql": "^4.0.0",
+    "graphql": "^0.13.2",
+    "graphql-import": "^0.6.0",
+    "graphql-tools": "^3.0.5",
     "next": "^6.1.1",
     "node-sass": "^4.9.2",
     "postcss-easy-import": "^3.0.0",
     "postcss-loader": "^2.1.6",
     "raw-loader": "^0.5.1",
+    "nodegit": "^0.22.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "sass-loader": "^7.0.3",
