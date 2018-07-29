@@ -4,7 +4,7 @@ NPM_COMMANDS := access adduser audit bin bugs c cache ci cit completion config c
 
 .PHONY: $(NPM_SCRIPTS)
 $(NPM_SCRIPTS): %:
-	@$(DOCKER_WOWGIT) npm run $@
+	@echo $@ | sed 's/-/:/g' | xargs $(DOCKER_WOWGIT) npm run
 
 .PHONY: $(NPM_COMMANDS)
 $(NPM_COMMANDS): %:
