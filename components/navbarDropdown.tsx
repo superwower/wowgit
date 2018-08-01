@@ -1,5 +1,3 @@
-import * as React from "react";
-
 interface IProps {
   title: string;
   items: string[];
