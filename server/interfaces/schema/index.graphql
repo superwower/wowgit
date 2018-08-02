@@ -1,9 +1,11 @@
 # import Author from 'author.graphql'
 # import Status from 'status.graphql'
+# import Remote from 'remote.graphql'
 
 type Query {
   authors: [Author]
   status(path: String): Status
+  remote(path: String): Remote
 }
 
 type Mutation {

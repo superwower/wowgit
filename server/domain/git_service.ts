@@ -10,4 +10,11 @@ export default interface IGitService {
    * @return promise of Status object
    */
   getStatus(repostioryPath: string): Promise<Status>;
+
+  /**
+   * Get the status of a repostiory
+   * @param repositoryPath path to git repository path
+   * @return promise of Status object
+   */
+  getRemote(repostioryPath: string): Promise<Remote>;
 }

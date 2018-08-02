@@ -1,5 +1,6 @@
 import * as path from "path";
 
+import RemoteService from "./app/remote";
 import StatusService from "./app/status";
 import NodeGitService from "./infra/git_service";
 import Server, {
@@ -19,6 +20,7 @@ export const main = async () => {
     "index.graphql"
   );
   const context = {
+    remoteService: new RemoteService(new NodeGitService()),
     statusService: new StatusService(new NodeGitService())
   };
 
