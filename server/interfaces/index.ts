@@ -46,7 +46,7 @@ export const registerNextjsRouter = async (
   path = "/*"
 ) => {
   // next.js routes
-  const nextApp = Next({ dev });
+  const nextApp = Next({ dev, dir: "./client" });
   await nextApp.prepare();
   const nextHandler = nextApp.getRequestHandler();
   // TODO: cast fastify to any until type definition for `all` is added
