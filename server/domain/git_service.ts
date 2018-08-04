@@ -17,5 +17,5 @@ export default interface IGitService {
    * @param repositoryPath path to git repository path
    * @return promise of remote object
    */
-  getRemote(repositoryPath: string): Promise<Remote>;
+  getRemotes(repositoryPath: string): Promise<Remote[]>;
 }

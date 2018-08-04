@@ -42,11 +42,9 @@ export default class NodeGitService implements IGitService {
     } = statusDict;
     return new Status(newFiles, renamedFiles, modifiedFiles, deletedFiles);
   }
-  public async getRemote(repositoryPath: string): Promise<Remote> {
+  public async getRemotes(repositoryPath: string): Promise<Remote[]> {
     const repo = await Git.Repository.open(repositoryPath);
     const remotes = await repo.getRemotes();
-    for (const remote of remotes) {
-      new Remote(remote);
-    }
+    return remotes.map(remote => new Remote(remote.name()));
   }
 }

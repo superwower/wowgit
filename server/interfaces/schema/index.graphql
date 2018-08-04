@@ -5,7 +5,7 @@
 type Query {
   authors: [Author]
   status(path: String): Status
-  remote(path: String): Remote
+  remotes(path: String): [Remote]
 }
 
 type Mutation {

@@ -8,8 +8,8 @@ const resolvers: IResolvers = {
     status(obj, args, context, info) {
       return context.statusService.getStatus(args.path);
     },
-    remote(obj, args, context, info) {
-      return context.remoteService.getRemote(args.path);
+    remotes(obj, args, context, info) {
+      return context.remoteService.getRemotes(args.path);
     }
   }
 };
