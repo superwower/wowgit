@@ -1,7 +1,7 @@
 import * as Git from "nodegit";
 
 import GitService from "../domain/git_service";
-import Status from "../domain/status";
+import Remote from "../domain/remote";
 
 /**
  * A service that access the status of git repository.
@@ -23,7 +23,7 @@ export default class RemoteService {
    * @param repositoryPath path to git repository path
    * @return promise of Status object
    */
-  public async getRemote(repositoryPath: string): Promise<Status> {
+  public async getRemote(repositoryPath: string): Promise<Remote> {
     return this.gitService.getRemote(repositoryPath);
   }
 }

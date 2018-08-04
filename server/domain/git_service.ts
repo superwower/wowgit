@@ -1,3 +1,4 @@
+import Remote from "./remote";
 import Status from "./status";
 
 /**
@@ -12,9 +13,9 @@ export default interface IGitService {
   getStatus(repostioryPath: string): Promise<Status>;
 
   /**
-   * Get the status of a repostiory
+   * Get the remote of a repostiory
    * @param repositoryPath path to git repository path
-   * @return promise of Status object
+   * @return promise of remote object
    */
-  getRemote(repostioryPath: string): Promise<Remote>;
+  getRemote(repositoryPath: string): Promise<Remote>;
 }

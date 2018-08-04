@@ -2,6 +2,7 @@ import * as Git from "nodegit";
 
 import File from "../domain/file";
 import IGitService from "../domain/git_service";
+import Remote from "../domain/remote";
 import Status from "../domain/status";
 
 /**
@@ -40,5 +41,12 @@ export default class NodeGitService implements IGitService {
       deleted: deletedFiles
     } = statusDict;
     return new Status(newFiles, renamedFiles, modifiedFiles, deletedFiles);
+  }
+  public async getRemote(repositoryPath: string): Promise<Remote> {
+    const repo = await Git.Repository.open(repositoryPath);
+    const remotes = await repo.getRemotes();
+    for (const remote of remotes) {
+      new Remote(remote);
+    }
   }
 }
