@@ -45,6 +45,6 @@ export default class NodeGitService implements IGitService {
   public async getRemotes(repositoryPath: string): Promise<Remote[]> {
     const repo = await Git.Repository.open(repositoryPath);
     const remotes = await repo.getRemotes();
-    return remotes.map(remote => new Remote(remote.name()));
+    return remotes.map(remote => new Remote(remote.toString()));
   }
 }
