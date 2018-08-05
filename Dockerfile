@@ -15,4 +15,4 @@ WORKDIR ${APP_DIR}
 RUN npm ci --production && npm run build && apk del .build-deps
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
