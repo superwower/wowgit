@@ -1,6 +1,6 @@
 FROM node:8.11.3-alpine
 
-ENV NPM_VERSION 6.2.0
+ENV NPM_VERSION 6.3.0
 ENV APP_DIR /opt/wowgit
 
 RUN apk --no-cache add --virtual .build-deps g++ make python && \
