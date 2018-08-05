@@ -1,8 +1,9 @@
 version: '3' 
 services:
     wowgit:
-        build: .
-        command: npm run dev
+        build: 
+            context: .
+            dockerfile: Dockerfile.dev
         volumes:
             - ./:/opt/wowgit
         ports:
