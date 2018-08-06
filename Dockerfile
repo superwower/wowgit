@@ -19,7 +19,6 @@ FROM node:8.11.3-alpine AS production
 
 ENV NPM_VERSION 6.3.0
 ENV APP_DIR /opt/wowgit
-ENV NEXT_DIR ${APP_DIR}/.next
 
 COPY --from=dev ${APP_DIR} ${APP_DIR}
 WORKDIR ${APP_DIR}
