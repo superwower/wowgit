@@ -1,8 +1,9 @@
-version: '3' 
+version: '3.4'
 services:
     wowgit:
-        build: .
-        command: npm run dev
+        build: 
+            context: .
+            target: dev
         volumes:
             - ./:/opt/wowgit
         ports:
