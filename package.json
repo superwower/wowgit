@@ -21,7 +21,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run husky-hooks",
-      "pre-push": "npm run husky-hooks"
+      "pre-rebase": "npm run husky-hooks"
     }
   },
   "jest": {
