@@ -88,7 +88,7 @@
     "redux": "^4.0.0",
     "sass-loader": "^7.0.3",
     "ts-node": "^7.0.0",
-    "typescript": "^2.9.2"
+    "typescript": "^3.0.1"
   },
   "devDependencies": {
     "@types/jest": "^23.1.6",
