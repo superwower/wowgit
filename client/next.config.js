@@ -27,7 +27,7 @@ module.exports = withTypescript({
           {
             loader: "sass-loader",
             options: {
-              includePaths: ["styles", "node_modules"]
+              includePaths: ["styles", path.join("..", "node_modules")]
                 .map(d => path.join(__dirname, d))
                 .map(g => glob.sync(g))
                 .reduce((a, c) => a.concat(c), [])
