@@ -17,5 +17,5 @@ export const storeFactory = <R extends ReducersMapObject>(
 };
 
 export const store = storeFactory({
-  todos: repos.reducerFactory(ReposModel())
+  repos: repos.reducerFactory(ReposModel())
 });
