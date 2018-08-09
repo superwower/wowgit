@@ -2,7 +2,7 @@ import { combineReducers, createStore, ReducersMapObject, Store } from "redux";
 import { createAggregate, Modeler } from "redux-aggregate";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import { IReposMT, IReposST, ReposModel } from "./repos";
+import { IReposMT, IReposST, reposModel } from "./repos";
 
 export interface IStoreST {
   repos: IRepoST;
@@ -17,5 +17,5 @@ export const storeFactory = <R extends ReducersMapObject>(
 };
 
 export const store = storeFactory({
-  repos: repos.reducerFactory(ReposModel())
+  repos: repos.reducerFactory(reposModel())
 });
