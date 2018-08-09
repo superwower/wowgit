@@ -10,3 +10,10 @@ export const repoModel: Modeler<IRepoST> = injects => ({
   path: "",
   ...injects
 });
+
+const getDisplayName = (state: IRepoST): string =>
+  state.name === null ? state.path : state.name;
+
+export const repoQR = {
+  getDisplayName
+};

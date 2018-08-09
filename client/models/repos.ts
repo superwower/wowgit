@@ -1,5 +1,5 @@
 import { Modeler } from "redux-aggregate";
-import { IRepoST, repoModel } from "./repo";
+import { IRepoST, repoModel, repoQR } from "./repo";
 
 export interface IReposST {
   name: string | null;
@@ -8,7 +8,10 @@ export interface IReposST {
 }
 
 export const reposModel: Modeler<IReposST> = injects => ({
-  items: [],
+  items: [
+    repoModel({ name: "wowgit", path: "/home/hitochan/wowgit" }),
+    repoModel({ name: "super", path: "/home/hitochan/super" })
+  ],
   name: null,
   path: "",
   ...injects

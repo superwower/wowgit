@@ -1,9 +1,22 @@
 import Link from "next/link";
 import * as React from "react";
+import { connect } from "react-redux";
+import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
 import NavbarDropdown from "../components/navbarDropdown";
+import { IStoreST } from "../models";
+import { repoQR } from "../models/repo";
+import { IReposST } from "../models/repos";
 
-export default () => (
+export interface IMapState {
+  repos: RepoST[];
+}
+
+const mapState = (state: IReposST): IMapState => ({
+  repos: state.items
+});
+
+export const header = ({ repos }: MapState) => (
   <div className="navbar is-primary">
     <div className="navbar-brand">
       <Link href="/">
@@ -15,10 +28,15 @@ export default () => (
       <div className="navbar-start">
         <NavbarDropdown
           title="Repository"
-          items={["Repository1", "Repository2"]}
+          items={repos.map(repo => repoQR.getDisplayName(repo))}
         />
         <NavbarDropdown title="Branch" items={["Branch1", "Branch2"]} />
       </div>
     </div>
   </div>
 );
+
+export default connect(
+  (store: IStoreST) => mapState(store.repos)
+  // (dispatch: Dispatch<AnyAction>) => mapDispatch(dispatch)
+)(header);
