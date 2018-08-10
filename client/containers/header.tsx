@@ -36,14 +36,16 @@ export const header = ({ repos, isActive, setIsActive }: MapState) => (
         />
         <NavbarDropdown title="Branch" items={["Branch1", "Branch2"]} />
       </div>
-      <div className="nav-right">
-        <span
-          onClick={() => {
-            setIsActive(true);
-          }}
-        >
-          +
-        </span>
+      <div className="navbar-right">
+        <a className="navbar-item">
+          <span
+            onClick={() => {
+              setIsActive(true);
+            }}
+          >
+            Add repository
+          </span>
+        </a>
       </div>
     </div>
     <AddRepoModal

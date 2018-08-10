@@ -9,6 +9,10 @@ export interface IProps {
   closeHandler: () => void;
   activeTab: ImportType;
   setActiveTab: (importType: ImportType) => void;
+  setRemoteName: (name: string) => void;
+  setRemotePath: (path: string) => void;
+  setLocalName: (name: string) => void;
+  setLocalPath: (path: string) => void;
 }
 
 export const withActiveTab = withState("activeTab", "setActiveTab", "LOCAL");
@@ -17,7 +21,11 @@ export const addRepoModal = ({
   isActive,
   closeHandler,
   activeTab,
-  setActiveTab
+  setActiveTab,
+  setRemoteName,
+  setRemotePath,
+  setLocalPath,
+  setLocalName
 }: IProps) => (
   <div className={classNames("modal", { "is-active": isActive })}>
     <div className="modal-background" />
@@ -52,13 +60,103 @@ export const addRepoModal = ({
                 </li>
               </ul>
             </div>
-            {activeTab === "LOCAL" ? <div>Local</div> : <div>Remote</div>}
+            {activeTab === "LOCAL" ? (
+              <div>
+                <div className="field">
+                  <div className="field-label">
+                    <label className="label">Name</label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field">
+                      <p className="control">
+                        <input
+                          className="input is-primary"
+                          type="text"
+                          placeholder="Local Name"
+                          onChange={e => {
+                            setLocalName(e.target.value);
+                          }}
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="field">
+                  <div className="field-label">
+                    <label className="label">Path</label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field">
+                      <p className="control">
+                        <input
+                          className="input is-primary"
+                          type="text"
+                          placeholder="Local Path"
+                          onChange={e => {
+                            setLocalPath(e.target.value);
+                          }}
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div className="field">
+                  <div className="field-label">
+                    <label className="label">Name</label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field">
+                      <p className="control">
+                        <input
+                          className="input is-primary"
+                          type="text"
+                          placeholder="Remote name"
+                          onChange={e => {
+                            setRemoteName(e.target.value);
+                          }}
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="field">
+                  <div className="field-label">
+                    <label className="label">Path</label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field">
+                      <p className="control">
+                        <input
+                          className="input is-primary"
+                          type="text"
+                          placeholder="Remote path"
+                          onChange={e => {
+                            setRemotePath(e.target.value);
+                          }}
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
       <footer className="modal-card-foot">
         <a className="button" onClick={closeHandler}>
           Cancel
+        </a>
+        <a
+          className="button"
+          onClick={() => {
+            // TODO: implement
+          }}
+        >
+          Add
         </a>
       </footer>
     </div>
