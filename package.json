@@ -36,7 +36,12 @@
       "jsx",
       "json"
     ],
-    "testURL": "http://localhost/"
+    "testURL": "http://localhost/",
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}",
+      "!**/*.d.ts",
+      "!**/*.{test,spec}.{ts,tsx}"
+    ]
   },
   "repository": {
     "type": "git",
