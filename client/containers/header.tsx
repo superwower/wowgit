@@ -1,8 +1,10 @@
 import Link from "next/link";
 import * as React from "react";
 import { connect } from "react-redux";
+import { compose, withState } from "recompose";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
+import AddRepoModal from "../components/AddRepoModal";
 import NavbarDropdown from "../components/navbarDropdown";
 import { IStoreST } from "../models";
 import { repoQR } from "../models/repo";
@@ -16,7 +18,9 @@ const mapState = (state: IReposST): IMapState => ({
   repos: state.items
 });
 
-export const header = ({ repos }: MapState) => (
+export const withIsActive = withState("isActive", "setIsActive", true);
+
+export const header = ({ repos, isActive, setIsActive }: MapState) => (
   <div className="navbar is-primary">
     <div className="navbar-brand">
       <Link href="/">
@@ -32,11 +36,29 @@ export const header = ({ repos }: MapState) => (
         />
         <NavbarDropdown title="Branch" items={["Branch1", "Branch2"]} />
       </div>
+      <div className="nav-right">
+        <span
+          onClick={() => {
+            setIsActive(true);
+          }}
+        >
+          +
+        </span>
+      </div>
     </div>
+    <AddRepoModal
+      isActive={isActive}
+      closeHandler={() => {
+        setIsActive(false);
+      }}
+    />
   </div>
 );
 
-export default connect(
-  (store: IStoreST) => mapState(store.repos)
-  // (dispatch: Dispatch<AnyAction>) => mapDispatch(dispatch)
+export default compose(
+  withIsActive,
+  connect(
+    (store: IStoreST) => mapState(store.repos)
+    // (dispatch: Dispatch<AnyAction>) => mapDispatch(dispatch)
+  )
 )(header);

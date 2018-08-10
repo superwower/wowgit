@@ -64,6 +64,7 @@
   },
   "homepage": "https://github.com/superwower/wowgit#readme",
   "dependencies": {
+    "@types/classnames": "^2.2.6",
     "@types/next": "^6.0.4",
     "@types/nodegit": "^0.22.3",
     "@zeit/next-typescript": "^1.1.0",
@@ -71,6 +72,7 @@
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-wrap-in-js": "^1.1.1",
     "bulma": "^0.7.1",
+    "classnames": "^2.2.6",
     "fastify": "^1.7.0",
     "fastify-graphql": "^4.0.0",
     "graphql": "^0.13.2",
@@ -85,6 +87,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
+    "recompose": "^0.28.2",
     "redux": "^4.0.0",
     "redux-aggregate": "^1.4.18",
     "redux-devtools-extension": "^2.13.5",
