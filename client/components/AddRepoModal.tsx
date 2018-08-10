@@ -1,12 +1,24 @@
 import classNames from "classnames";
 import * as React from "react";
+import { compose, withState } from "recompose";
+
+type ImportType = "LOCAL" | "REMOTE";
 
 export interface IProps {
   isActive: boolean;
   closeHandler: () => void;
+  activeTab: ImportType;
+  setActiveTab: (importType: ImportType) => void;
 }
 
-export default ({ isActive, closeHandler }: IProps) => (
+export const withActiveTab = withState("activeTab", "setActiveTab", "LOCAL");
+
+export const addRepoModal = ({
+  isActive,
+  closeHandler,
+  activeTab,
+  setActiveTab
+}: IProps) => (
   <div className={classNames("modal", { "is-active": isActive })}>
     <div className="modal-background" />
     <div className="modal-card">
@@ -20,14 +32,27 @@ export default ({ isActive, closeHandler }: IProps) => (
           <div className="card">
             <div className="tabs is-boxed">
               <ul>
-                <li className="is-active">
-                  <a>Pictures</a>
+                <li
+                  className={classNames({ "is-active": activeTab === "LOCAL" })}
+                  onClick={() => {
+                    setActiveTab("LOCAL");
+                  }}
+                >
+                  <a>From local</a>
                 </li>
-                <li>
-                  <a>Music</a>
+                <li
+                  className={classNames({
+                    "is-active": activeTab === "REMOTE"
+                  })}
+                  onClick={() => {
+                    setActiveTab("REMOTE");
+                  }}
+                >
+                  <a>From remote</a>
                 </li>
               </ul>
             </div>
+            {activeTab === "LOCAL" ? <div>Local</div> : <div>Remote</div>}
           </div>
         </div>
       </section>
@@ -39,3 +64,5 @@ export default ({ isActive, closeHandler }: IProps) => (
     </div>
   </div>
 );
+
+export default compose(withActiveTab)(addRepoModal);
