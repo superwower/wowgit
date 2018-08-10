@@ -1,5 +1,9 @@
+import * as React from "react";
+
 import Header from "../containers/header";
-import style from "../styles/style.scss";
+
+/* tslint:disable */
+const style = require("../styles/style.scss");
 
 export default ({ children }) => (
   <div>

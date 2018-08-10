@@ -1,3 +1,5 @@
+import { IFieldResolver } from "graphql-tools";
+
 import StatusService from "../../app/status";
 import File from "../../domain/file";
 import GitService from "../../domain/git_service";
@@ -26,7 +28,8 @@ describe("Query", () => {
       const context = {
         statusService: new StatusService(new MockGitService())
       };
-      const status = await resolver.Query.status({}, args, context);
+      /* tslint:disable */
+      const status = await resolver.Query["status"]({}, args, context);
       expect(status.untracked).toHaveLength(1);
       expect(status.untracked[0].path).toBe("/path/to/untracked/file");
       expect(status.renamed).toHaveLength(1);
