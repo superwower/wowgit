@@ -27,7 +27,8 @@
   "jest": {
     "globals": {
       "ts-jest": {
-        "enableTsDiagnostics": true
+        "enableTsDiagnostics": true,
+        "skipBabel": true
       }
     },
     "transform": {
