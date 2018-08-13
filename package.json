@@ -4,11 +4,11 @@
   "description": "A git web client that wows you",
   "main": "server/index.ts",
   "scripts": {
-    "dev": "ts-node-dev --ignore-watch .next server/index.ts",
+    "dev": "ts-node-dev --ignore-watch client/.next server/index.ts",
     "build": "npm run build:clean && npm run build:next",
-    "build:next": "next build",
-    "build:clean": "rm -rf .next",
-    "clean": "rm -rf node_modules .next",
+    "build:next": "next build client",
+    "build:clean": "rm -rf client/.next",
+    "clean": "rm -rf node_modules client/.next",
     "start": "NODE_ENV=production ts-node server/index.ts",
     "test": "npm run jest",
     "format": "prettier --list-different \"{**/*,*}.{js,ts,jsx,tsx,json,graphql}\"",
@@ -21,7 +21,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run husky-hooks",
-      "pre-push": "npm run husky-hooks"
+      "pre-rebase": "npm run husky-hooks"
     }
   },
   "jest": {
