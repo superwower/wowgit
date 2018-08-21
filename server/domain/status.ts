@@ -1,3 +1,4 @@
+import File from "./file";
 /**
  * This class represents the status of a git repository
  */
