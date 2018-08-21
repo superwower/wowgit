@@ -1,7 +1,10 @@
+import { IFieldResolver } from "graphql-tools";
+
 import StatusService from "../../app/status";
 import File from "../../domain/file";
 import GitService from "../../domain/git_service";
 import Status from "../../domain/status";
+import Remote from "../../domain/remote";
 import resolver from "./root";
 
 class MockGitService implements GitService {
@@ -13,6 +16,10 @@ class MockGitService implements GitService {
       [new File("/path/to/deleted/file")]
     );
     return Promise.resolve(status);
+  }
+  public getRemotes(repositoryPath: string): Promise<Remote[]> {
+    const remotes = [new Remote("origin"), new Remote("upstream")];
+    return Promise.resolve(remotes);
   }
 }
 
@@ -26,7 +33,8 @@ describe("Query", () => {
       const context = {
         statusService: new StatusService(new MockGitService())
       };
-      const status = await resolver.Query.status({}, args, context);
+      /* tslint:disable */
+      const status = await resolver.Query["status"]({}, args, context);
       expect(status.untracked).toHaveLength(1);
       expect(status.untracked[0].path).toBe("/path/to/untracked/file");
       expect(status.renamed).toHaveLength(1);

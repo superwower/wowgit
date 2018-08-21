@@ -1,3 +1,4 @@
+import * as React from "react";
 import RemoteBranches from "../components/remoteBranches";
 
 export default () => (

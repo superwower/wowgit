@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import BranchPane from "../containers/branchPane";
 import CommitPane from "../containers/commitPane";
 import GraphPane from "../containers/graphPane";
