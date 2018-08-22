@@ -7,11 +7,16 @@ import { AnyAction, bindActionCreators, Dispatch } from "redux";
 import AddRepoModal from "../components/AddRepoModal";
 import NavbarDropdown from "../components/navbarDropdown";
 import { IStoreST } from "../models";
-import { repoQR } from "../models/repo";
+import { IRepoST, repoQR } from "../models/repo";
 import { IReposST } from "../models/repos";
 
 export interface IMapState {
-  repos: RepoST[];
+  repos: IRepoST[];
+}
+
+export interface IProps extends IMapState {
+  isActive: boolean;
+  setIsActive: (isActive: boolean) => void;
 }
 
 const mapState = (state: IReposST): IMapState => ({
@@ -20,7 +25,7 @@ const mapState = (state: IReposST): IMapState => ({
 
 export const withIsActive = withState("isActive", "setIsActive", true);
 
-export const header = ({ repos, isActive, setIsActive }: MapState) => (
+export const header = ({ repos, isActive, setIsActive }: IProps) => (
   <div className="navbar is-primary">
     <div className="navbar-brand">
       <Link href="/">

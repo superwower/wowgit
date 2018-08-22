@@ -2,10 +2,11 @@ import { combineReducers, createStore, ReducersMapObject, Store } from "redux";
 import { createAggregate, Modeler } from "redux-aggregate";
 import { composeWithDevTools } from "redux-devtools-extension";
 
+import { IRepoST } from "./repo";
 import { IReposST, reposModel, reposMT } from "./repos";
 
 export interface IStoreST {
-  repos: IRepoST;
+  repos: IReposST;
 }
 
 export const repos = createAggregate(reposMT, "repos/");

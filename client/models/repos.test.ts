@@ -1,4 +1,4 @@
-import { repoMT } from "./repo";
+import { IRepoST } from "./repo";
 import { reposModel, reposMT } from "./repos";
 
 describe("ReposMT", () => {
