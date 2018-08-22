@@ -36,120 +36,108 @@ export const addRepoModal = ({
         <button className="delete" onClick={closeHandler} />
       </header>
       <section className="modal-card-body">
-        <div className="content">
-          <div className="card">
-            <div className="tabs is-boxed">
-              <ul>
-                <li
-                  className={classNames({ "is-active": activeTab === "LOCAL" })}
-                  onClick={() => {
-                    setActiveTab("LOCAL");
-                  }}
-                >
-                  <a>From local</a>
-                </li>
-                <li
-                  className={classNames({
-                    "is-active": activeTab === "REMOTE"
-                  })}
-                  onClick={() => {
-                    setActiveTab("REMOTE");
-                  }}
-                >
-                  <a>From remote</a>
-                </li>
-              </ul>
-            </div>
-            {activeTab === "LOCAL" ? (
-              <div>
-                <div className="field">
-                  <div className="field-label">
-                    <label className="label">Name</label>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <p className="control">
-                        <input
-                          className="input is-primary"
-                          type="text"
-                          placeholder="Local Name"
-                          onChange={e => {
-                            setLocalName(e.target.value);
-                          }}
-                        />
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="field">
-                  <div className="field-label">
-                    <label className="label">Path</label>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <p className="control">
-                        <input
-                          className="input is-primary"
-                          type="text"
-                          placeholder="Local Path"
-                          onChange={e => {
-                            setLocalPath(e.target.value);
-                          }}
-                        />
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div>
-                <div className="field">
-                  <div className="field-label">
-                    <label className="label">Name</label>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <p className="control">
-                        <input
-                          className="input is-primary"
-                          type="text"
-                          placeholder="Remote name"
-                          onChange={e => {
-                            setRemoteName(e.target.value);
-                          }}
-                        />
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="field">
-                  <div className="field-label">
-                    <label className="label">Path</label>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <p className="control">
-                        <input
-                          className="input is-primary"
-                          type="text"
-                          placeholder="Remote path"
-                          onChange={e => {
-                            setRemotePath(e.target.value);
-                          }}
-                        />
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+        <div className="tabs is-boxed">
+          <ul>
+            <li
+              className={classNames({ "is-active": activeTab === "LOCAL" })}
+              onClick={() => {
+                setActiveTab("LOCAL");
+              }}
+            >
+              <a>From local</a>
+            </li>
+            <li
+              className={classNames({
+                "is-active": activeTab === "REMOTE"
+              })}
+              onClick={() => {
+                setActiveTab("REMOTE");
+              }}
+            >
+              <a>From remote</a>
+            </li>
+          </ul>
         </div>
+        {activeTab === "LOCAL" ? (
+          <div>
+            <div className="field">
+              <label className="label">Name</label>
+              <div className="field-body">
+                <div className="field">
+                  <p className="control">
+                    <input
+                      className="input is-primary"
+                      type="text"
+                      placeholder="Local Name"
+                      onChange={e => {
+                        setLocalName(e.target.value);
+                      }}
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="field">
+              <label className="label">Path</label>
+              <div className="field-body">
+                <div className="field">
+                  <p className="control">
+                    <input
+                      className="input is-primary"
+                      type="text"
+                      placeholder="Local Path"
+                      onChange={e => {
+                        setLocalPath(e.target.value);
+                      }}
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div className="field">
+              <label className="label">Name</label>
+              <div className="field-body">
+                <div className="field">
+                  <p className="control">
+                    <input
+                      className="input is-primary"
+                      type="text"
+                      placeholder="Remote name"
+                      onChange={e => {
+                        setRemoteName(e.target.value);
+                      }}
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="field">
+              <label className="label">Path</label>
+              <div className="field-body">
+                <div className="field">
+                  <p className="control">
+                    <input
+                      className="input is-primary"
+                      type="text"
+                      placeholder="Remote path"
+                      onChange={e => {
+                        setRemotePath(e.target.value);
+                      }}
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
-      <footer className="modal-card-foot">
-        <a className="button" onClick={closeHandler}>
-          Cancel
-        </a>
+      <footer
+        className="modal-card-foot"
+        style={{ justifyContent: "flex-end" }}
+      >
         <a
           className="button"
           onClick={() => {
@@ -157,6 +145,10 @@ export const addRepoModal = ({
           }}
         >
           Add
+        </a>
+
+        <a className="button" onClick={closeHandler}>
+          Cancel
         </a>
       </footer>
     </div>

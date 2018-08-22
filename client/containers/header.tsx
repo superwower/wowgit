@@ -42,15 +42,16 @@ export const header = ({ repos, isActive, setIsActive }: IProps) => (
         <NavbarDropdown title="Branch" items={["Branch1", "Branch2"]} />
       </div>
       <div className="navbar-right">
-        <a className="navbar-item">
+        <div className="navbar-item">
           <span
+            className="navbar-link"
             onClick={() => {
               setIsActive(true);
             }}
           >
-            Add repository
+            Add
           </span>
-        </a>
+        </div>
       </div>
     </div>
     <AddRepoModal
