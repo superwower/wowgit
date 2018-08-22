@@ -23,7 +23,7 @@ const mapState = (state: IReposST): IMapState => ({
   repos: state.items
 });
 
-export const withIsActive = withState("isActive", "setIsActive", true);
+export const withIsActive = withState("isActive", "setIsActive", false);
 
 export const header = ({ repos, isActive, setIsActive }: IProps) => (
   <div className="navbar is-primary">
