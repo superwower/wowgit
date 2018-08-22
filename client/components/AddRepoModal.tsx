@@ -9,10 +9,8 @@ export interface IProps {
   closeHandler: () => void;
   activeTab: ImportType;
   setActiveTab: (importType: ImportType) => void;
-  setRemoteName: (name: string) => void;
-  setRemotePath: (path: string) => void;
-  setLocalName: (name: string) => void;
-  setLocalPath: (path: string) => void;
+  setName: (name: string) => void;
+  setPath: (path: string) => void;
 }
 
 export const withActiveTab = withState("activeTab", "setActiveTab", "LOCAL");
@@ -22,10 +20,8 @@ export const addRepoModal = ({
   closeHandler,
   activeTab,
   setActiveTab,
-  setRemoteName,
-  setRemotePath,
-  setLocalPath,
-  setLocalName
+  setName,
+  setSrc
 }: IProps) => (
   <div className={classNames("modal", { "is-active": isActive })}>
     <div className="modal-background" />
@@ -58,85 +54,53 @@ export const addRepoModal = ({
             </li>
           </ul>
         </div>
-        {activeTab === "LOCAL" ? (
-          <div>
-            <div className="field">
-              <label className="label">Name</label>
-              <div className="field-body">
-                <div className="field">
-                  <p className="control">
-                    <input
-                      className="input is-primary"
-                      type="text"
-                      placeholder="Local Name"
-                      onChange={e => {
-                        setLocalName(e.target.value);
-                      }}
-                    />
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="field">
-              <label className="label">Path</label>
-              <div className="field-body">
-                <div className="field">
-                  <p className="control">
-                    <input
-                      className="input is-primary"
-                      type="text"
-                      placeholder="Local Path"
-                      onChange={e => {
-                        setLocalPath(e.target.value);
-                      }}
-                    />
-                  </p>
-                </div>
+        <div>
+          <div className="field">
+            <label className="label">Name</label>
+            <div className="field-body">
+              <div className="field">
+                <p className="control">
+                  <input
+                    className="input is-primary"
+                    type="text"
+                    placeholder="Name"
+                    onChange={e => {
+                      setName(e.target.value);
+                    }}
+                  />
+                </p>
               </div>
             </div>
           </div>
-        ) : (
-          <div>
-            <div className="field">
-              <label className="label">Name</label>
-              <div className="field-body">
-                <div className="field">
-                  <p className="control">
-                    <input
-                      className="input is-primary"
-                      type="text"
-                      placeholder="Remote name"
-                      onChange={e => {
-                        setRemoteName(e.target.value);
-                      }}
-                    />
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="field">
-              <label className="label">Path</label>
-              <div className="field-body">
-                <div className="field">
-                  <p className="control">
-                    <input
-                      className="input is-primary"
-                      type="text"
-                      placeholder="Remote path"
-                      onChange={e => {
-                        setRemotePath(e.target.value);
-                      }}
-                    />
-                  </p>
-                </div>
+          <div className="field">
+            <label className="label">
+              {activeTab === "LOCAL" ? "Path" : "URL"}
+            </label>
+            <div className="field-body">
+              <div className="field">
+                <p className="control">
+                  <input
+                    className="input is-primary"
+                    type="text"
+                    placeholder={
+                      activeTab === "LOCAL" ? "Local Path" : "Remote URL"
+                    }
+                    onChange={e => {
+                      setPath(e.target.value);
+                    }}
+                  />
+                </p>
               </div>
             </div>
           </div>
-        )}
+        </div>
       </section>
       <footer
         className="modal-card-foot"
-        style={{ justifyContent: "flex-end" }}
+        style={{
+          // TODO: don't use inline style
+          justifyContent: "flex-end"
+        }}
       >
         <a
           className="button"
