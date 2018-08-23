@@ -2,10 +2,10 @@ import { repoModel, repoQR } from "./repo";
 
 describe("repoQR", () => {
   describe("getDisplayName", () => {
-    it("uses path when name is null", () => {
+    it("uses src when name is null", () => {
       const state = repoModel({
         name: null,
-        path: "/home/hitochan/super-repo"
+        src: "/home/hitochan/super-repo"
       });
       const computed = repoQR.getDisplayName(state);
       const expected = "/home/hitochan/super-repo";
@@ -15,7 +15,7 @@ describe("repoQR", () => {
     it("uses name when name is not null", () => {
       const state = repoModel({
         name: "cool-repo",
-        path: "/home/hitochan/super-repo"
+        src: "/home/hitochan/super-repo"
       });
       const computed = repoQR.getDisplayName(state);
       const expected = "cool-repo";

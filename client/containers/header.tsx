@@ -56,7 +56,7 @@ export const header = ({ repos, isActive, setIsActive }: IProps) => (
     </div>
     <AddRepoModal
       isActive={isActive}
-      closeHandler={() => {
+      closeModal={() => {
         setIsActive(false);
       }}
     />

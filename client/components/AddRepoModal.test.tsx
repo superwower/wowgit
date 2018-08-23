@@ -1,17 +1,52 @@
+/* tslint:disable:no-empty */
 import * as React from "react";
 import * as TestRenderer from "react-test-renderer";
 
-import AddRepoModal from "./AddRepoModal";
+import {
+  addRepoModal as PureAddRepoModal,
+  ImportType,
+  IProps
+} from "./AddRepoModal";
 
 let instance: TestRenderer.ReactTestInstance;
 
-it("calls close handler when x button is clicked", () => {
-  const closeHandler = jest.fn();
+const createPureAddRepoModal = (props: { [K in keyof IProps]?: IProps[K] }) => {
+  const mergedProps: IProps = {
+    activeTab: "REMOTE",
+    addRepo: () => {},
+    closeModal: () => {},
+    isActive: false,
+    name: "",
+    onAddClick: () => {},
+    onCancelClick: () => {},
+    setActiveTab: activeTab => {},
+    setName: name => {},
+    setSrc: src => {},
+    src: "",
+    ...props
+  };
+  return <PureAddRepoModal {...mergedProps} />;
+};
+
+it("calls closeModal when x button is clicked", () => {
+  const closeModal = jest.fn();
   const testRenderer = TestRenderer.create(
-    <AddRepoModal isActive={false} closeHandler={closeHandler} />
+    createPureAddRepoModal({ closeModal })
   );
   instance = testRenderer.root;
   const closeButton = instance.find(el => el.type === "button");
   closeButton.props.onClick();
-  expect(closeHandler).toHaveBeenCalledTimes(1);
+  expect(closeModal).toHaveBeenCalledTimes(1);
+});
+
+it("clears name and src when Add button is clicked", () => {
+  // TODO: implement
+});
+
+it("clears name and src when Cancel button is clicked", () => {
+  // TODO: implement
+});
+
+it("add name to repository list when Add button is clicked", () => {
+  // TODO: implement
 });

@@ -1,27 +1,66 @@
 import classNames from "classnames";
 import * as React from "react";
-import { compose, withState } from "recompose";
+import { connect } from "react-redux";
+import { compose, withHandlers, withState } from "recompose";
+import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
-type ImportType = "LOCAL" | "REMOTE";
+import { IStoreST, repos } from "../models";
+import { reposMT } from "../models/repos";
 
-export interface IProps {
-  isActive: boolean;
-  closeHandler: () => void;
-  activeTab: ImportType;
-  setActiveTab: (importType: ImportType) => void;
-  setName: (name: string) => void;
-  setPath: (path: string) => void;
+export type ImportType = "LOCAL" | "REMOTE";
+
+interface IMapDispatch {
+  addRepo: (value: { name: string | null; src: string }) => void;
 }
 
-export const withActiveTab = withState("activeTab", "setActiveTab", "LOCAL");
+export interface IProps extends IMapDispatch {
+  isActive: boolean;
+  closeModal: () => void;
+  activeTab: ImportType;
+  setActiveTab: (importType: ImportType) => void;
+  setName: (name: string | null) => void;
+  setSrc: (src: string) => void;
+  name: string | null;
+  src: string;
+  onAddClick: () => void;
+  onCancelClick: () => void;
+}
 
-export const addRepoModal = ({
+const resetForm = (props: IProps): void => {
+  props.setName("");
+  props.setSrc("");
+};
+
+export const enhance = compose(
+  withState("activeTab", "setActiveTab", "LOCAL"),
+  withState("name", "setName", ""),
+  withState("src", "setSrc", ""),
+  withHandlers({
+    onAddClick: (props: IProps) => () => {
+      const { name, src } = props;
+      props.addRepo({ name, src });
+      resetForm(props);
+      props.closeModal();
+    },
+    onCancelClick: (props: IProps) => () => {
+      resetForm(props);
+      props.closeModal();
+    }
+  })
+);
+
+export const addRepoModal: React.SFC<IProps> = ({
+  addRepo,
   isActive,
-  closeHandler,
+  closeModal,
   activeTab,
   setActiveTab,
   setName,
-  setSrc
+  setSrc,
+  name,
+  src,
+  onAddClick,
+  onCancelClick
 }: IProps) => (
   <div className={classNames("modal", { "is-active": isActive })}>
     <div className="modal-background" />
@@ -29,7 +68,7 @@ export const addRepoModal = ({
       <header className="modal-card-head">
         >
         <p className="modal-card-title">New Repository</p>
-        <button className="delete" onClick={closeHandler} />
+        <button className="delete" onClick={closeModal} />
       </header>
       <section className="modal-card-body">
         <div className="tabs is-boxed">
@@ -86,7 +125,7 @@ export const addRepoModal = ({
                       activeTab === "LOCAL" ? "Local Path" : "Remote URL"
                     }
                     onChange={e => {
-                      setPath(e.target.value);
+                      setSrc(e.target.value);
                     }}
                   />
                 </p>
@@ -102,16 +141,11 @@ export const addRepoModal = ({
           justifyContent: "flex-end"
         }}
       >
-        <a
-          className="button"
-          onClick={() => {
-            // TODO: implement
-          }}
-        >
+        <a className="button" onClick={onAddClick}>
           Add
         </a>
 
-        <a className="button" onClick={closeHandler}>
+        <a className="button" onClick={onCancelClick}>
           Cancel
         </a>
       </footer>
@@ -119,4 +153,18 @@ export const addRepoModal = ({
   </div>
 );
 
-export default compose(withActiveTab)(addRepoModal);
+const mapDispatch = (dispatch: Dispatch<AnyAction>): IMapDispatch =>
+  bindActionCreators(
+    {
+      addRepo: repos.creators.addRepo
+    },
+    dispatch
+  );
+
+export default compose(
+  connect<{}, IMapDispatch, {}>(
+    (store: IStoreST) => ({}),
+    (dispatch: Dispatch<AnyAction>) => mapDispatch(dispatch)
+  ),
+  enhance
+)(addRepoModal);

@@ -1,34 +1,34 @@
 import { Modeler } from "redux-aggregate";
-import { IRepoST, repoModel, repoQR } from "./repo";
+import { IRepoST, repoModel } from "./repo";
 
 export interface IReposST {
-  name: string | null;
-  path: string;
   items: IRepoST[];
+}
+
+export interface IAddRepoPayload {
+  name: string | null;
+  src: string;
 }
 
 export const reposModel: Modeler<IReposST> = injects => ({
   items: [
-    repoModel({ name: "wowgit", path: "/home/hitochan/wowgit" }),
-    repoModel({ name: "super", path: "/home/hitochan/super" })
+    repoModel({ name: "wowgit", src: "/home/hitochan/wowgit" }),
+    repoModel({ name: "super", src: "/home/hitochan/super" })
   ],
-  name: null,
-  path: "",
   ...injects
 });
 
-const addRepo = (state: IReposST): IReposST => {
-  const { name, path } = state;
-  if (path === "") {
+const addRepo = (state: IReposST, { name, src }: IAddRepoPayload): IReposST => {
+  if (src === "") {
     return state;
   }
   const repo = repoModel({
     name,
-    path
+    src
   });
   const items = [...state.items];
   items.push(repo);
-  return { ...state, items, path: "", name: null };
+  return { ...state, items };
 };
 
 export const reposMT = {
