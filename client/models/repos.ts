@@ -11,10 +11,7 @@ export interface IAddRepoPayload {
 }
 
 export const reposModel: Modeler<IReposST> = injects => ({
-  items: [
-    repoModel({ name: "wowgit", src: "/home/hitochan/wowgit" }),
-    repoModel({ name: "super", src: "/home/hitochan/super" })
-  ],
+  items: [],
   ...injects
 });
 
