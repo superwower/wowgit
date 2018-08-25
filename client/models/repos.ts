@@ -15,6 +15,12 @@ export const reposModel: Modeler<IReposST> = injects => ({
   ...injects
 });
 
+/**
+ * Add a repo specified by the payload to repo list
+ * @param { IReposST } state IReposST state
+ * @param { IAddRepoPayload } payload name and src of the repository to add to the list
+ * @returns { IReposST } a new state in which the list is appended with the the new repo
+ */
 const addRepo = (state: IReposST, { name, src }: IAddRepoPayload): IReposST => {
   if (src === "") {
     return state;

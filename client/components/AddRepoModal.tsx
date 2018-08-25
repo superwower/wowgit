@@ -14,7 +14,7 @@ interface IMapDispatch {
 }
 
 export interface IProps extends IMapDispatch {
-  isActive: boolean;
+  isActive: boolean; // is the modal shown?
   closeModal: () => void;
   activeTab: ImportType;
   setActiveTab: (importType: ImportType) => void;
@@ -26,6 +26,9 @@ export interface IProps extends IMapDispatch {
   onCancelClick: () => void;
 }
 
+/**
+ * Reset the values in the modal form
+ */
 const resetForm = (props: IProps): void => {
   props.setName("");
   props.setSrc("");
@@ -49,6 +52,10 @@ export const enhance = compose(
   })
 );
 
+/**
+ * This is a stateless components for a modal to import git repository
+ *
+ */
 export const addRepoModal: React.SFC<IProps> = ({
   addRepo,
   isActive,

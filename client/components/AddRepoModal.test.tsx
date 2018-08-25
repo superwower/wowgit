@@ -9,6 +9,13 @@ import {
   IProps
 } from "./AddRepoModal";
 
+/**
+ * create a props object for addRepoModal component.
+ * It merges the given object with the default values so
+ * that you don't need to specify all the fields in props.
+ * @param { { [K in keyof IProps]?: IProps[K] } } props an object that contains part of fields in IProps
+ * @returns { IProps } props object that are merged with default vaues
+ */
 const createProps = (props: { [K in keyof IProps]?: IProps[K] }): IProps => ({
   activeTab: "REMOTE",
   addRepo: () => {},

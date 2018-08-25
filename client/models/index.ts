@@ -1,9 +1,13 @@
+/**
+ * The root model that aggregates sub models
+ */
 import { combineReducers, createStore, ReducersMapObject, Store } from "redux";
 import { createAggregate, Modeler } from "redux-aggregate";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import { IReposST, reposModel, reposMT } from "./repos";
 
+// Root store
 export interface IStoreST {
   repos: IReposST;
 }

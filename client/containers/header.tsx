@@ -15,7 +15,7 @@ export interface IMapState {
 }
 
 export interface IProps extends IMapState {
-  isActive: boolean;
+  isActive: boolean; // is the modal for adding repository shown?
   setIsActive: (isActive: boolean) => void;
 }
 
@@ -65,8 +65,5 @@ export const header = ({ repos, isActive, setIsActive }: IProps) => (
 
 export default compose(
   withIsActive,
-  connect(
-    (store: IStoreST) => mapState(store.repos)
-    // (dispatch: Dispatch<AnyAction>) => mapDispatch(dispatch)
-  )
+  connect<IMapState, {}, {}>((store: IStoreST) => mapState(store.repos))
 )(header);
