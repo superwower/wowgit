@@ -19,9 +19,10 @@ export const main = async () => {
     "schema",
     "index.graphql"
   );
+  const nodeGitService = new NodeGitService();
   const context = {
-    remoteService: new RemoteService(new NodeGitService()),
-    statusService: new StatusService(new NodeGitService())
+    remoteService: new RemoteService(nodeGitService),
+    statusService: new StatusService(nodeGitService)
   };
 
   registerGraphqlRouter(fastify, schemaPath, resolvers, context);
