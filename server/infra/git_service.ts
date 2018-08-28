@@ -48,6 +48,11 @@ export default class NodeGitService implements IGitService {
    * @return { Promise<boolean> } promise of Status object
    */
   public async isGitRepository(path: string): Promise<boolean> {
-    return false;
+    try {
+      await Git.Repository.open(path);
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 }
