@@ -41,4 +41,13 @@ export default class NodeGitService implements IGitService {
     } = statusDict;
     return new Status(newFiles, renamedFiles, modifiedFiles, deletedFiles);
   }
+
+  /**
+   * Check if a given path is a valid git repositrory
+   * @param { string } path path to git repository path
+   * @return { Promise<boolean> } promise of Status object
+   */
+  public async isGitRepository(path: string): Promise<boolean> {
+    return false;
+  }
 }

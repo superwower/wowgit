@@ -6,7 +6,10 @@ const resolvers: IResolvers = {
       return [];
     },
     status(obj, args, context, info) {
-      return context.statusService.getStatus(args.path);
+      return context.queryService.getStatus(args.path);
+    },
+    isGitRepository(obj, args, context, info) {
+      return context.queryService.isGitRepository(args.path);
     }
   }
 };
