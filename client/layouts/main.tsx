@@ -1,14 +1,16 @@
 import * as React from "react";
+import { Provider } from "react-redux";
 
 import Header from "../containers/header";
-
-/* tslint:disable */
-const style = require("../styles/style.scss");
+import { store } from "../models";
+import style from "../styles/style.scss";
 
 export default ({ children }) => (
-  <div>
-    <style dangerouslySetInnerHTML={{ __html: style }} />
-    <Header />
-    {children}
-  </div>
+  <Provider store={store}>
+    <div>
+      <style dangerouslySetInnerHTML={{ __html: style }} />
+      <Header />
+      {children}
+    </div>
+  </Provider>
 );
