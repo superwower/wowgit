@@ -3,6 +3,7 @@ box: nodesource/trusty
 build:
   # The steps that will be executed on build
   steps:
+    - npm-install
     # A step that executes `npm run lint` command
     - npm-run-lint
     # A step that executes `npm test` command
