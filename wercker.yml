@@ -7,7 +7,7 @@ build:
     # A step that executes `npm run lint` command
     - npm-run-lint
     # A step that executes `npm test` command
-    # - npm-test
+    - npm-test
 
     # A custom script step, name value is used in the UI
     # and the code value contains the command that get executed
