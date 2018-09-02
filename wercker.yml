@@ -3,16 +3,15 @@ box: nodesource/trusty
 build:
   # The steps that will be executed on build
   steps:
-    - npm-install
-    # A step that executes `npm run lint` command
-    - npm-run-lint
-    # A step that executes `npm test` command
-    - npm-test
-
-    # A custom script step, name value is used in the UI
-    # and the code value contains the command that get executed
     - script:
         name: echo nodejs information
         code: |
           echo "node version $(node -v) running"
           echo "npm version $(npm -v) running"
+
+    - npm-install
+    - npm-test
+    - script:
+        name: lint
+        code: npm run lint
+
