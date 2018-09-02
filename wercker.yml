@@ -1,4 +1,4 @@
-box: nodesource/trusty
+box: node:8.11.3-alpine
 # Build definition
 build:
   # The steps that will be executed on build
@@ -9,8 +9,12 @@ build:
           echo "node version $(node -v) running"
           echo "npm version $(npm -v) running"
 
-    - npm-install
+    - script:
+        name: install packages
+        code: npm ci
+
     - npm-test
+
     - script:
         name: lint
         code: npm run lint
