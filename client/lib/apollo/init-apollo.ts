@@ -1,7 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost";
 import fetch from "isomorphic-unfetch";
 
-import isBrowser from "./is-browser";
+import isBrowser from "../is-browser";
 
 let apolloClient = null;
 

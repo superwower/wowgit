@@ -4,7 +4,7 @@ import * as React from "react";
 import { getDataFromTree } from "react-apollo";
 
 import initApollo from "./init-apollo";
-import isBrowser from "./is-browser";
+import isBrowser from "../is-browser";
 
 export default App => {
   return class Apollo extends React.Component {
