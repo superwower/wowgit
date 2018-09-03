@@ -1,12 +1,18 @@
 import { ApolloClient, InMemoryCache } from "apollo-boost";
 import Head from "next/head";
 import * as React from "react";
-import { getDataFromTree } from "react-apollo";
+import { ApolloConsumer, getDataFromTree } from "react-apollo";
 
 import initApollo from "./init-apollo";
 import isBrowser from "../is-browser";
 
-export default App => {
+export const withApolloConsumer = Component => props => (
+  <ApolloConsumer>
+    {client => <Component {...props} client={client} />}
+  </ApolloConsumer>
+);
+
+export const withApolloClient = App => {
   return class Apollo extends React.Component {
     public static displayName = "withApollo(App)";
     public static async getInitialProps(ctx) {

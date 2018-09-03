@@ -2,12 +2,12 @@ import { ApolloClient, InMemoryCache } from "apollo-boost";
 import classNames from "classnames";
 import gql from "graphql-tag";
 import * as React from "react";
-import { ApolloConsumer, Query } from "react-apollo";
 import { connect } from "react-redux";
 import { compose, withHandlers, withState } from "recompose";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
 import InputBox from "./InputBox";
+import { withApolloConsumer } from "../../lib/apollo/with-apollo";
 import { IStoreST, repos } from "../../models";
 import { reposMT } from "../../models/repos";
 
@@ -169,11 +169,7 @@ const mapDispatch = (dispatch: Dispatch<AnyAction>): IMapDispatch =>
   );
 
 export default compose(
-  Component => props => (
-    <ApolloConsumer>
-      {client => <Component {...props} client={client} />}
-    </ApolloConsumer>
-  ),
+  withApolloConsumer,
   connect<{}, IMapDispatch, {}>(
     (store: IStoreST) => ({}),
     (dispatch: Dispatch<AnyAction>) => mapDispatch(dispatch)
