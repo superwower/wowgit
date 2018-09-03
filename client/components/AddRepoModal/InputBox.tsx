@@ -2,7 +2,7 @@ import * as React from "react";
 
 interface IProps {
   labelName: string;
-  onChange: (e: React.FormEvent<HTMLSelectElement>) => void;
+  onChange: (e: React.FormEvent<HTMLInputElement>) => void;
   placeholder: string;
   value: string;
 }

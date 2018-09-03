@@ -6,10 +6,10 @@ import { connect } from "react-redux";
 import { compose, withHandlers, withState } from "recompose";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
-import InputBox from "./InputBox";
 import { withApolloConsumer } from "../../lib/apollo/with-apollo";
 import { IStoreST, repos } from "../../models";
 import { reposMT } from "../../models/repos";
+import InputBox from "./InputBox";
 
 const IS_GIT_REPO = gql`
   query IsGitRepository($path: String) {
@@ -127,7 +127,7 @@ export const addRepoModal: React.SFC<IProps> = ({
             labelName="Name"
             placeholder="Name"
             onChange={e => {
-              setName(e.target.value);
+              setName((e.target as HTMLInputElement).value);
             }}
             value={name}
           />
@@ -135,7 +135,7 @@ export const addRepoModal: React.SFC<IProps> = ({
             labelName={activeTab === "LOCAL" ? "Path" : "URL"}
             placeholder={activeTab === "LOCAL" ? "Local Path" : "Remote URL"}
             onChange={e => {
-              setSrc(e.target.value);
+              setSrc((e.target as HTMLInputElement).value);
             }}
             value={src}
           />

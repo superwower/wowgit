@@ -3,8 +3,8 @@ import Head from "next/head";
 import * as React from "react";
 import { ApolloConsumer, getDataFromTree } from "react-apollo";
 
-import initApollo from "./init-apollo";
 import isBrowser from "../is-browser";
+import initApollo from "./init-apollo";
 
 export const withApolloConsumer = Component => props => (
   <ApolloConsumer>
@@ -27,7 +27,7 @@ export const withApolloClient = App => {
 
       // Run all GraphQL queries in the component tree
       // and extract the resulting data
-      const apollo = initApollo();
+      const apollo = initApollo({});
       try {
         // Run all GraphQL queries
         await getDataFromTree(
