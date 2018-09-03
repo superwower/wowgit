@@ -1,11 +1,21 @@
+import { ApolloClient, InMemoryCache } from "apollo-boost";
 import classNames from "classnames";
+import gql from "graphql-tag";
 import * as React from "react";
+import { ApolloConsumer, Query } from "react-apollo";
 import { connect } from "react-redux";
 import { compose, withHandlers, withState } from "recompose";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
-import { IStoreST, repos } from "../models";
-import { reposMT } from "../models/repos";
+import InputBox from "./InputBox";
+import { IStoreST, repos } from "../../models";
+import { reposMT } from "../../models/repos";
+
+const IS_GIT_REPO = gql`
+  query IsGitRepository($path: String) {
+    isGitRepository(path: $path)
+  }
+`;
 
 export type ImportType = "LOCAL" | "REMOTE";
 
@@ -15,6 +25,7 @@ interface IMapDispatch {
 
 export interface IProps extends IMapDispatch {
   isActive: boolean; // is the modal shown?
+  client: any; // TODO: use proper type
   closeModal: () => void;
   activeTab: ImportType;
   setActiveTab: (importType: ImportType) => void;
@@ -22,7 +33,7 @@ export interface IProps extends IMapDispatch {
   setSrc: (src: string) => void;
   name: string | null;
   src: string;
-  onAddClick: () => void;
+  onAddClick: () => Promise<void>;
   onCancelClick: () => void;
 }
 
@@ -39,11 +50,21 @@ export const enhance = compose(
   withState("name", "setName", ""),
   withState("src", "setSrc", ""),
   withHandlers({
-    onAddClick: (props: IProps) => () => {
-      const { name, src } = props;
-      props.addRepo({ name, src });
-      resetForm(props);
-      props.closeModal();
+    onAddClick: (props: IProps) => async () => {
+      const { name, src, client } = props;
+      const result: any = await client.query({
+        query: IS_GIT_REPO,
+        variables: {
+          path: src
+        }
+      });
+      if (result.data.isGitRepository) {
+        props.addRepo({ name, src });
+        resetForm(props);
+        props.closeModal();
+        return;
+      }
+      alert(src + " is not valid");
     },
     onCancelClick: (props: IProps) => () => {
       resetForm(props);
@@ -59,6 +80,7 @@ export const enhance = compose(
 export const addRepoModal: React.SFC<IProps> = ({
   addRepo,
   isActive,
+  client,
   closeModal,
   activeTab,
   setActiveTab,
@@ -101,44 +123,22 @@ export const addRepoModal: React.SFC<IProps> = ({
           </ul>
         </div>
         <div>
-          <div className="field">
-            <label className="label">Name</label>
-            <div className="field-body">
-              <div className="field">
-                <p className="control">
-                  <input
-                    className="input is-primary"
-                    type="text"
-                    placeholder="Name"
-                    onChange={e => {
-                      setName(e.target.value);
-                    }}
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="field">
-            <label className="label">
-              {activeTab === "LOCAL" ? "Path" : "URL"}
-            </label>
-            <div className="field-body">
-              <div className="field">
-                <p className="control">
-                  <input
-                    className="input is-primary"
-                    type="text"
-                    placeholder={
-                      activeTab === "LOCAL" ? "Local Path" : "Remote URL"
-                    }
-                    onChange={e => {
-                      setSrc(e.target.value);
-                    }}
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
+          <InputBox
+            labelName="Name"
+            placeholder="Name"
+            onChange={e => {
+              setName(e.target.value);
+            }}
+            value={name}
+          />
+          <InputBox
+            labelName={activeTab === "LOCAL" ? "Path" : "URL"}
+            placeholder={activeTab === "LOCAL" ? "Local Path" : "Remote URL"}
+            onChange={e => {
+              setSrc(e.target.value);
+            }}
+            value={src}
+          />
         </div>
       </section>
       <footer
@@ -169,6 +169,11 @@ const mapDispatch = (dispatch: Dispatch<AnyAction>): IMapDispatch =>
   );
 
 export default compose(
+  Component => props => (
+    <ApolloConsumer>
+      {client => <Component {...props} client={client} />}
+    </ApolloConsumer>
+  ),
   connect<{}, IMapDispatch, {}>(
     (store: IStoreST) => ({}),
     (dispatch: Dispatch<AnyAction>) => mapDispatch(dispatch)

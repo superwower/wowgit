@@ -19,6 +19,7 @@ import {
 const createProps = (props: { [K in keyof IProps]?: IProps[K] }): IProps => ({
   activeTab: "REMOTE",
   addRepo: () => {},
+  client: {}, // TODO: propery handle
   closeModal: () => {},
   isActive: false,
   name: "",
@@ -49,18 +50,19 @@ describe("recompose HOCs", () => {
   describe("onAddClick", () => {
     it(`1) adds repo to repo list with the specified name
         2) clears name and src when Add button is clicked
-        3) closes modal`, () => {
+        3) closes modal`, async () => {
       const addRepo = jest.fn();
       const closeModal = jest.fn();
       /* tslint:disable-next-line:variable-name*/
       const Enhanced = enhance(MockComponent);
+      const client = hoge;
       const testRenderer = TestRenderer.create(
         <Enhanced addRepo={addRepo} closeModal={closeModal} />
       );
       const instance = testRenderer.root.findByType(MockComponent);
       instance.props.setName("repo name");
       instance.props.setSrc("repo src");
-      instance.props.onAddClick();
+      await instance.props.onAddClick();
       expect(instance.props.name).toBe("");
       expect(instance.props.src).toBe("");
       expect(addRepo).toHaveBeenCalledWith({
