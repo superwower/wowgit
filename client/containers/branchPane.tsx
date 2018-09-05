@@ -1,5 +1,6 @@
 import * as React from "react";
 import RemoteBranches from "../components/remoteBranches";
+import { IStoreST, remotes } from "../models";
 
 export default () => (
   <div>
