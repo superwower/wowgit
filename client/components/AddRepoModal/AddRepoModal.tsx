@@ -25,7 +25,7 @@ interface IMapDispatch {
 
 export interface IProps extends IMapDispatch {
   isActive: boolean; // is the modal shown?
-  client: any; // TODO: use proper type
+  client: ApolloClient<InMemoryCache>;
   closeModal: () => void;
   activeTab: ImportType;
   setActiveTab: (importType: ImportType) => void;
