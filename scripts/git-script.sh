@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# トラッキングされていないファイルも含めてstash 
+# トラッキングされていないファイルも含めてstash
 old_stash=$(git rev-parse -q --verify refs/stash)
 git stash -q --keep-index --include-untracked
 new_stash=$(git rev-parse -q --verify refs/stash)
