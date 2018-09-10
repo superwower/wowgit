@@ -1,27 +1,24 @@
 #! /bin/sh
 
-# First, stash index and work dir, keeping only the
-# to-be-committed changes in the working directory.
+# トラッキングされていないファイルも含めてstash 
 old_stash=$(git rev-parse -q --verify refs/stash)
 git stash -q --keep-index --include-untracked
 new_stash=$(git rev-parse -q --verify refs/stash)
 
-# If there were no changes (e.g., `--amend` or `--allow-empty`)
-# then nothing was stashed, and we should skip everything,
-# including the tests themselves.  (Presumably the tests passed
-# on the previous commit, so there is no need to re-run them.)
+# ステージングにファイルがなければ (コミットされるファイルがなければ)
+# テストを実行せずにそのまま終了
 if [ "$old_stash" = "$new_stash" ]; then
     echo "pre-commit script: no changes to test"
-    sleep 1 # XXX hack, editor may erase message
+    sleep 1 # ハック: エディタによってはメッセージを表示しないことがあるため
     exit 0
 fi
 
-# Run tests
+# テストを実行する
 make $1
 status=$?
 
-# Restore changes
-git reset --hard -q && git stash apply --index -q && git stash drop -q
+# stashの内容をリストア
+git reset --hard -q && git stash pop --index -q 
 
-# Exit with status from test-run: nonzero prevents commit
+# テストが失敗すればコミットはされない
 exit $status
