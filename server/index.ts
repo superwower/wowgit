@@ -1,6 +1,6 @@
 import * as path from "path";
 
-import StatusService from "./app/status";
+import QueryService from "./app/query_service";
 import NodeGitService from "./infra/git_service";
 import Server, {
   buildFastify,
@@ -19,7 +19,7 @@ export const main = async () => {
     "index.graphql"
   );
   const context = {
-    statusService: new StatusService(new NodeGitService())
+    queryService: new QueryService(new NodeGitService())
   };
 
   registerGraphqlRouter(fastify, schemaPath, resolvers, context);

@@ -8,7 +8,7 @@ import Status from "../domain/status";
  * A service that access the status of git repository.
  * This service corresponds to `git status`.
  */
-export default class StatusService {
+export default class QueryService {
   private gitService: GitService;
 
   /**
@@ -26,5 +26,14 @@ export default class StatusService {
    */
   public async getStatus(repositoryPath: string): Promise<Status> {
     return this.gitService.getStatus(repositoryPath);
+  }
+
+  /**
+   * Get the status of a repostiory
+   * @param repositoryPath path to git repository path
+   * @return promise of Status object
+   */
+  public async isGitRepository(path: string): Promise<boolean> {
+    return this.gitService.isGitRepository(path);
   }
 }

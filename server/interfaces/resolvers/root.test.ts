@@ -1,13 +1,13 @@
 import { IFieldResolver } from "graphql-tools";
 
-import StatusService from "../../app/status";
+import QueryService from "../../app/query_service";
 import File from "../../domain/file";
 import GitService from "../../domain/git_service";
 import Status from "../../domain/status";
 import resolver from "./root";
 
 class MockGitService implements GitService {
-  public getStatus(repositoryPath: string): Promise<Status> {
+  public async getStatus(repositoryPath: string): Promise<Status> {
     const status = new Status(
       [new File("/path/to/untracked/file")],
       [new File("/path/to/renamed/file")],
@@ -15,6 +15,10 @@ class MockGitService implements GitService {
       [new File("/path/to/deleted/file")]
     );
     return Promise.resolve(status);
+  }
+
+  public async isGitRepository(path: string): Promise<boolean> {
+    return true;
   }
 }
 
@@ -26,7 +30,7 @@ describe("Query", () => {
         path: ""
       };
       const context = {
-        statusService: new StatusService(new MockGitService())
+        queryService: new QueryService(new MockGitService())
       };
       /* tslint:disable */
       const status = await resolver.Query["status"]({}, args, context);

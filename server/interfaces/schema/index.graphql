@@ -4,6 +4,7 @@
 type Query {
   authors: [Author]
   status(path: String): Status
+  isGitRepository(path: String): Boolean
 }
 
 type Mutation {

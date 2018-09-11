@@ -19,10 +19,11 @@ import {
 const createProps = (props: { [K in keyof IProps]?: IProps[K] }): IProps => ({
   activeTab: "REMOTE",
   addRepo: () => {},
+  client: {}, // TODO: propery handle
   closeModal: () => {},
   isActive: false,
   name: "",
-  onAddClick: () => {},
+  onAddClick: () => Promise.resolve(),
   onCancelClick: () => {},
   setActiveTab: activeTab => {},
   setName: name => {},
@@ -47,20 +48,32 @@ it("calls closeModal when x button is clicked", () => {
 
 describe("recompose HOCs", () => {
   describe("onAddClick", () => {
-    it(`1) adds repo to repo list with the specified name
+    it(`1) adds repo to repo list with the specified name and src which is git repo
         2) clears name and src when Add button is clicked
-        3) closes modal`, () => {
+        3) closes modal`, async () => {
       const addRepo = jest.fn();
       const closeModal = jest.fn();
       /* tslint:disable-next-line:variable-name*/
       const Enhanced = enhance(MockComponent);
       const testRenderer = TestRenderer.create(
-        <Enhanced addRepo={addRepo} closeModal={closeModal} />
+        <Enhanced
+          addRepo={addRepo}
+          closeModal={closeModal}
+          client={{
+            query() {
+              return Promise.resolve({
+                data: {
+                  isGitRepository: true
+                }
+              });
+            }
+          }}
+        />
       );
       const instance = testRenderer.root.findByType(MockComponent);
       instance.props.setName("repo name");
       instance.props.setSrc("repo src");
-      instance.props.onAddClick();
+      await instance.props.onAddClick();
       expect(instance.props.name).toBe("");
       expect(instance.props.src).toBe("");
       expect(addRepo).toHaveBeenCalledWith({
@@ -85,5 +98,39 @@ describe("recompose HOCs", () => {
       expect(instance.props.src).toBe("");
       expect(closeModal).toHaveBeenCalledTimes(1);
     });
+  });
+
+  it(`does not add repo when the given src does not exist`, async () => {
+    const alertTmp = window.alert;
+    window.alert = jest.fn();
+    const addRepo = jest.fn();
+    const closeModal = jest.fn();
+    /* tslint:disable-next-line:variable-name*/
+    const Enhanced = enhance(MockComponent);
+    const testRenderer = TestRenderer.create(
+      <Enhanced
+        addRepo={addRepo}
+        closeModal={closeModal}
+        client={{
+          query() {
+            return Promise.resolve({
+              data: {
+                isGitRepository: false
+              }
+            });
+          }
+        }}
+      />
+    );
+    const instance = testRenderer.root.findByType(MockComponent);
+    instance.props.setName("repo name");
+    instance.props.setSrc("repo src");
+    await instance.props.onAddClick();
+    expect(instance.props.name).toBe("repo name");
+    expect(instance.props.src).toBe("repo src");
+    expect(addRepo).not.toHaveBeenCalled();
+    expect(closeModal).not.toHaveBeenCalled();
+    expect(window.alert).toHaveBeenCalledTimes(1);
+    window.alert = alertTmp;
   });
 });
