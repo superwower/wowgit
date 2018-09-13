@@ -1,45 +1,54 @@
-import * as Git from "nodegit";
+import * as fs from "fs";
+import * as git from "isomorphic-git";
 
 import File from "../domain/file";
 import IGitService from "../domain/git_service";
 import Status from "../domain/status";
 
+enum STATUS {
+  FILE = 0,
+  HEAD = 1,
+  WORKDIR = 2,
+  STAGE = 3
+}
+
 /**
  * Implementation of GitService with nodegit
  */
-export default class NodeGitService implements IGitService {
+export default class GitService implements IGitService {
+  public constructor() {
+    git.plugins.set("fs", fs);
+  }
   /**
    * Get the status of a repostiory
    * @param repositoryPath path to git repository path
    * @return promise of Status object
    */
   public async getStatus(repositoryPath: string): Promise<Status> {
-    const repo = await Git.Repository.open(repositoryPath);
-    const statusFiles = await repo.getStatus();
+    const statuses = await git.statusMatrix({
+      dir: repositoryPath,
+      pattern: null
+    });
     const statusDict = {
       deleted: [],
       modified: [],
-      new: [],
-      renamed: []
+      new: []
     };
-    for (const file of statusFiles) {
-      if (file.isNew()) {
-        statusDict.new.push(new File(file.path()));
-      } else if (file.isModified()) {
-        statusDict.modified.push(new File(file.path()));
-      } else if (file.isRenamed()) {
-        statusDict.renamed.push(new File(file.path()));
-      } else if (file.isDeleted()) {
-        statusDict.deleted.push(new File(file.path()));
+    for (const status of statuses) {
+      if (status[STATUS.HEAD] === 0) {
+        statusDict.new.push(new File(status[STATUS.FILE]));
+      } else if (status[STATUS.HEAD] === 1 && status[STATUS.WORKDIR] === 2) {
+        statusDict.modified.push(new File(status[STATUS.FILE]));
+      } else if (status[STATUS.WORKDIR] === 0) {
+        statusDict.deleted.push(new File(status[STATUS.FILE]));
       }
     }
     const {
       new: newFiles,
       modified: modifiedFiles,
-      renamed: renamedFiles,
       deleted: deletedFiles
     } = statusDict;
-    return new Status(newFiles, renamedFiles, modifiedFiles, deletedFiles);
+    return new Status(newFiles, modifiedFiles, deletedFiles);
   }
 
   /**
@@ -49,8 +58,8 @@ export default class NodeGitService implements IGitService {
    */
   public async isGitRepository(path: string): Promise<boolean> {
     try {
-      await Git.Repository.open(path);
-      return true;
+      const gitRoot = await git.findRoot({ filepath: path });
+      return gitRoot === path;
     } catch (err) {
       return false;
     }
