@@ -10,12 +10,12 @@ export const remotesModel: Modeler<IRemotesST> = injects => ({
   ...injects
 });
 
-const fetchRemtoes = (state: IRemotesST): IRemotesST => {
+const fetchRemotes = (state: IRemotesST): IRemotesST => {
   const items = [...state.items];
   items.push({ name: "test", branches: [{ name: "test" }] });
   return { ...state, items };
 };
 
 export const remotesMT = {
-  fetchRemtoes
+  fetchRemotes
 };
