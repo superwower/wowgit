@@ -2,7 +2,6 @@
 
 type Status {
   untracked: [File]
-  renamed: [File]
   modified: [File]
   deleted: [File]
 }

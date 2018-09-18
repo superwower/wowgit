@@ -19,7 +19,7 @@ import {
 const createProps = (props: { [K in keyof IProps]?: IProps[K] }): IProps => ({
   activeTab: "REMOTE",
   addRepo: () => {},
-  client: {}, // TODO: propery handle
+  client: {} as any, // TODO: propery handle
   closeModal: () => {},
   isActive: false,
   name: "",

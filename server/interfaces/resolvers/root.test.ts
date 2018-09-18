@@ -10,7 +10,6 @@ class MockGitService implements GitService {
   public async getStatus(repositoryPath: string): Promise<Status> {
     const status = new Status(
       [new File("/path/to/untracked/file")],
-      [new File("/path/to/renamed/file")],
       [new File("/path/to/modified/file")],
       [new File("/path/to/deleted/file")]
     );
@@ -36,8 +35,6 @@ describe("Query", () => {
       const status = await resolver.Query["status"]({}, args, context);
       expect(status.untracked).toHaveLength(1);
       expect(status.untracked[0].path).toBe("/path/to/untracked/file");
-      expect(status.renamed).toHaveLength(1);
-      expect(status.renamed[0].path).toBe("/path/to/renamed/file");
       expect(status.modified).toHaveLength(1);
       expect(status.modified[0].path).toBe("/path/to/modified/file");
       expect(status.deleted).toHaveLength(1);

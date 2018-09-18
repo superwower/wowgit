@@ -9,11 +9,6 @@ export default class Status {
   private _untracked: File[];
 
   /**
-   * List of renamed files
-   */
-  private _renamed: File[];
-
-  /**
    * List of modified files
    */
   private _modified: File[];
@@ -25,18 +20,11 @@ export default class Status {
 
   /**
    * @param untracked Array of untracked file
-   * @param renamaed Array of renamed file
    * @param modified Array of modified file
    * @param deleted Array of deleted file
    */
-  constructor(
-    untracked: File[],
-    renamed: File[],
-    modified: File[],
-    deleted: File[]
-  ) {
+  constructor(untracked: File[], modified: File[], deleted: File[]) {
     this._untracked = untracked;
-    this._renamed = renamed;
     this._modified = modified;
     this._deleted = deleted;
   }
@@ -46,13 +34,6 @@ export default class Status {
    */
   get untracked(): File[] {
     return this._untracked;
-  }
-
-  /**
-   * @return Array of renamed files
-   */
-  get renamed(): File[] {
-    return this._renamed;
   }
 
   /**
