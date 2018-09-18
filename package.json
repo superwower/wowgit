@@ -16,12 +16,11 @@
     "lint": "npm run format && tslint -c tslint.json ./{*,**/*}.{ts,tsx}",
     "jest": "jest",
     "coverage": "jest --coverage",
-    "husky-hooks": "npm run lint && npm test"
+    "husky": "npm run lint && npm test"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run husky-hooks",
-      "pre-rebase": "npm run husky-hooks"
+      "pre-commit": "sh scripts/git-script.sh husky"
     }
   },
   "jest": {
