@@ -15,14 +15,7 @@
     "format:fix": "prettier --write \"{**/*,*}.{js,ts,jsx,tsx,json,graphql}\"",
     "lint": "npm run format && tslint -c tslint.json ./{*,**/*}.{ts,tsx}",
     "jest": "jest",
-    "coverage": "jest --coverage",
-    "husky-hooks": "npm run lint && npm test"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run husky-hooks",
-      "pre-rebase": "npm run husky-hooks"
-    }
+    "coverage": "jest --coverage"
   },
   "jest": {
     "globals": {
@@ -101,7 +94,6 @@
   },
   "devDependencies": {
     "@types/jest": "^23.1.6",
-    "husky": "^1.0.0-rc.13",
     "jest": "^23.4.1",
     "prettier": "^1.13.7",
     "react-test-renderer": "^16.4.2",
