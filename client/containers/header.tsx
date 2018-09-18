@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { compose, withState } from "recompose";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
-import AddRepoModal from "../components/AddRepoModal";
+import AddRepoModal from "../components/AddRepoModal/AddRepoModal";
 import NavbarDropdown from "../components/navbarDropdown";
 import { IStoreST } from "../models";
 import { IRepoST, repoQR } from "../models/repo";

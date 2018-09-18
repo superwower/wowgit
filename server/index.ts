@@ -1,7 +1,6 @@
 import * as path from "path";
 
-import RemoteService from "./app/remote";
-import StatusService from "./app/status";
+import QueryService from "./app/query_service";
 import NodeGitService from "./infra/git_service";
 import Server, {
   buildFastify,
@@ -21,8 +20,7 @@ export const main = async () => {
   );
   const nodeGitService = new NodeGitService();
   const context = {
-    remoteService: new RemoteService(nodeGitService),
-    statusService: new StatusService(nodeGitService)
+    queryService: new QueryService(new NodeGitService())
   };
 
   registerGraphqlRouter(fastify, schemaPath, resolvers, context);

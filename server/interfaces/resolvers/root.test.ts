@@ -1,6 +1,6 @@
 import { IFieldResolver } from "graphql-tools";
 
-import StatusService from "../../app/status";
+import QueryService from "../../app/query_service";
 import File from "../../domain/file";
 import GitService from "../../domain/git_service";
 import Status from "../../domain/status";
@@ -8,18 +8,22 @@ import Remote from "../../domain/remote";
 import resolver from "./root";
 
 class MockGitService implements GitService {
-  public getStatus(repositoryPath: string): Promise<Status> {
+  public async getStatus(repositoryPath: string): Promise<Status> {
     const status = new Status(
       [new File("/path/to/untracked/file")],
-      [new File("/path/to/renamed/file")],
       [new File("/path/to/modified/file")],
       [new File("/path/to/deleted/file")]
     );
     return Promise.resolve(status);
   }
+
   public getRemotes(repositoryPath: string): Promise<Remote[]> {
     const remotes = [new Remote("origin"), new Remote("upstream")];
     return Promise.resolve(remotes);
+  }
+
+  public async isGitRepository(path: string): Promise<boolean> {
+    return true;
   }
 }
 
@@ -31,14 +35,12 @@ describe("Query", () => {
         path: ""
       };
       const context = {
-        statusService: new StatusService(new MockGitService())
+        queryService: new QueryService(new MockGitService())
       };
       /* tslint:disable */
       const status = await resolver.Query["status"]({}, args, context);
       expect(status.untracked).toHaveLength(1);
       expect(status.untracked[0].path).toBe("/path/to/untracked/file");
-      expect(status.renamed).toHaveLength(1);
-      expect(status.renamed[0].path).toBe("/path/to/renamed/file");
       expect(status.modified).toHaveLength(1);
       expect(status.modified[0].path).toBe("/path/to/modified/file");
       expect(status.deleted).toHaveLength(1);

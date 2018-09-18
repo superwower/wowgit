@@ -3,7 +3,9 @@ import { Provider } from "react-redux";
 
 import Header from "../containers/header";
 import { store } from "../models";
-import style from "../styles/style.scss";
+
+// tslint:disable-next-line
+const style = require("../styles/style.scss");
 
 export default ({ children }) => (
   <Provider store={store}>
