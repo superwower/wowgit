@@ -10,6 +10,9 @@ const resolvers: IResolvers = {
     },
     isGitRepository(obj, args, context, info) {
       return context.queryService.isGitRepository(args.path);
+    },
+    getLocalBranches(obj, { path }, context, info) {
+      return context.queryService.getLocalBranches(path);
     }
   }
 };

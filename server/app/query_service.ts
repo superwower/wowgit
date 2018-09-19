@@ -1,5 +1,6 @@
 import * as Git from "nodegit";
 
+import Branch from "../domain/branch";
 import File from "../domain/file";
 import GitService from "../domain/git_service";
 import Status from "../domain/status";
@@ -35,5 +36,14 @@ export default class QueryService {
    */
   public async isGitRepository(path: string): Promise<boolean> {
     return this.gitService.isGitRepository(path);
+  }
+
+  /**
+   * Get a list of local branches
+   * @param { string } path path to git repository path
+   * @return { Promise<Branch[]> } a list of local branches
+   */
+  public async getLocalBranches(path: string): Promise<Branch[]> {
+    return this.gitService.getLocalBranches(path);
   }
 }

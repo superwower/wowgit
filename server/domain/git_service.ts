@@ -1,3 +1,4 @@
+import Branch from "./branch";
 import Status from "./status";
 
 /**
@@ -17,4 +18,11 @@ export default interface IGitService {
    * @return { Promise<boolean> } promise of Status object
    */
   isGitRepository(path: string): Promise<boolean>;
+
+  /**
+   * Get a list of local branches
+   * @param { string } path path to git repository path
+   * @return { Promise<Branch[]> } a list of local branches
+   */
+  getLocalBranches(path: string): Promise<Branch[]>;
 }
