@@ -1,5 +1,7 @@
+import gql from "graphql-tag";
 import Link from "next/link";
 import * as React from "react";
+import { Query } from "react-apollo";
 import { connect } from "react-redux";
 import { compose, withState } from "recompose";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
@@ -9,6 +11,12 @@ import NavbarDropdown from "../components/navbarDropdown";
 import { IStoreST } from "../models";
 import { IRepoST, repoQR } from "../models/repo";
 import { IReposST } from "../models/repos";
+
+const GET_LOCAL_BRANCHES = gql`
+  query getLocalBranches($path: String) {
+    getLocalBranches(path: $path)
+  }
+`;
 
 export interface IMapState {
   repos: IRepoST[];
@@ -25,7 +33,14 @@ const mapState = (state: IReposST): IMapState => ({
 
 export const withIsActive = withState("isActive", "setIsActive", false);
 
-export const header = ({ repos, isActive, setIsActive }: IProps) => (
+export const header = ({
+  repos,
+  isActive,
+  setIsActive,
+  loading,
+  error,
+  data
+}: IProps) => (
   <div className="navbar is-primary">
     <div className="navbar-brand">
       <Link href="/">
@@ -63,7 +78,19 @@ export const header = ({ repos, isActive, setIsActive }: IProps) => (
   </div>
 );
 
+const withQuery = Component => (props: IProps) => (
+  <Query query={GET_LOCAL_BRANCHES}>
+    {({ loading, error, data }) => {
+      console.log(data);
+      return (
+        <Component {...props} loading={loading} error={error} data={data} />
+      );
+    }}
+  </Query>
+);
+
 export default compose(
   withIsActive,
-  connect<IMapState, {}, {}>((store: IStoreST) => mapState(store.repos))
+  connect<IMapState, {}, {}>((store: IStoreST) => mapState(store.repos)),
+  withQuery
 )(header);
