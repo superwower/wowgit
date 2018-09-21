@@ -14,7 +14,9 @@ import { IReposST } from "../models/repos";
 
 const GET_LOCAL_BRANCHES = gql`
   query getLocalBranches($path: String) {
-    getLocalBranches(path: $path)
+    getLocalBranches(path: $path) {
+      name
+    }
   }
 `;
 
@@ -32,11 +34,14 @@ const mapState = (state: IReposST): IMapState => ({
 });
 
 export const withIsActive = withState("isActive", "setIsActive", false);
+export const withCurrentRepo = withState("currentRepo", "setCurrentRepo", null);
 
 export const header = ({
   repos,
   isActive,
   setIsActive,
+  currentRepo,
+  setCurrentRepo,
   loading,
   error,
   data
@@ -53,8 +58,14 @@ export const header = ({
         <NavbarDropdown
           title="Repository"
           items={repos.map(repo => repoQR.getDisplayName(repo))}
+          onClick={({ text }) => {
+            setCurrentRepo(text);
+          }}
         />
-        <NavbarDropdown title="Branch" items={["Branch1", "Branch2"]} />
+        <NavbarDropdown
+          title="Branch"
+          items={data.getLocalBranches.map(branch => branch.name)}
+        />
       </div>
       <div className="navbar-right">
         <div className="navbar-item">
@@ -79,7 +90,7 @@ export const header = ({
 );
 
 const withQuery = Component => (props: IProps) => (
-  <Query query={GET_LOCAL_BRANCHES}>
+  <Query query={GET_LOCAL_BRANCHES} variables={{ path: props.currentRepo.src }}>
     {({ loading, error, data }) => {
       console.log(data);
       return (
@@ -90,6 +101,7 @@ const withQuery = Component => (props: IProps) => (
 );
 
 export default compose(
+  withCurrentRepo,
   withIsActive,
   connect<IMapState, {}, {}>((store: IStoreST) => mapState(store.repos)),
   withQuery
