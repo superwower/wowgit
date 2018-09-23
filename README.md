@@ -9,7 +9,7 @@ Git web client that wows you
 
 ## Installation
 
-```
+```bash
 git clone https://github.com/superwower/wowgit.git
 cd wowgit
 make prod
@@ -24,13 +24,13 @@ By default the server will run on port 3000.
 First time, type the following instead of `npm install`.
 (Usually, you can skip the next time.)
 
-```
+```bash
 make install
 ```
 
 To start development, type the following instead of `npm start`.
 
-```
+```bash
 make dev
 ```
 
