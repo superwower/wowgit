@@ -3,7 +3,7 @@ import * as React from "react";
 interface IProps {
   title: string;
   items: string[];
-  onClick: ({ id }) => void;
+  onClick: (text: string) => void;
 }
 
 export default ({ title, items, onClick }: IProps) => (
@@ -12,6 +12,7 @@ export default ({ title, items, onClick }: IProps) => (
     <div className="navbar-dropdown is-boxed">
       {items.map(item => (
         <span
+          key={item}
           className="navbar-item"
           onClick={() => {
             onClick(item);

@@ -13,8 +13,8 @@ import { IRepoST, repoQR } from "../models/repo";
 import { IReposST } from "../models/repos";
 
 const GET_LOCAL_BRANCHES = gql`
-  query getLocalBranches($path: String) {
-    getLocalBranches(path: $path) {
+  {
+    getLocalBranches(path: "/opt/wowgit") {
       name
     }
   }
@@ -58,13 +58,17 @@ export const header = ({
         <NavbarDropdown
           title="Repository"
           items={repos.map(repo => repoQR.getDisplayName(repo))}
-          onClick={({ text }) => {
-            setCurrentRepo(text);
+          onClick={name => {
+            setCurrentRepo(name);
           }}
         />
         <NavbarDropdown
           title="Branch"
-          items={data.getLocalBranches.map(branch => branch.name)}
+          items={
+            data.getLocalBranches
+              ? data.getLocalBranches.map(branch => branch.name)
+              : []
+          }
         />
       </div>
       <div className="navbar-right">
@@ -89,16 +93,23 @@ export const header = ({
   </div>
 );
 
-const withQuery = Component => (props: IProps) => (
-  <Query query={GET_LOCAL_BRANCHES} variables={{ path: props.currentRepo.src }}>
-    {({ loading, error, data }) => {
-      console.log(data);
-      return (
-        <Component {...props} loading={loading} error={error} data={data} />
-      );
-    }}
-  </Query>
-);
+const withQuery = Component => (props: IProps) => {
+  const repo = props.repos.find(repo => repo.src == props.currentRepo);
+  const currentRepoSrc = repo ? repo.src : null;
+  return (
+    <Query
+      query={GET_LOCAL_BRANCHES}
+      variables={{ path: currentRepoSrc }}
+      skip={props.currentRepo === null}
+    >
+      {({ loading, error, data }) => {
+        return (
+          <Component {...props} loading={loading} error={error} data={data} />
+        );
+      }}
+    </Query>
+  );
+};
 
 export default compose(
   withCurrentRepo,
