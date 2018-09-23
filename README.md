@@ -21,6 +21,13 @@ By default the server will run on port 3000.
 
 ### How to start development
 
+First time, type the following instead of `npm install`.
+(Usually, you can skip the next time.)
+
+```
+make install
+```
+
 To start development, type the following instead of `npm start`.
 
 ```
