@@ -5,7 +5,14 @@ Git web client that wows you
 
 ## Requirements
 
-- Docker
+- [Docker](https://www.docker.com/)
+- [GnuWin32](http://gnuwin32.sourceforge.net/) (Windows only)
+  - [GetGnuWin32 – Maintaining a Gnuwin32 Package archive](http://getgnuwin32.sourceforge.net/)
+    or the set of following packages
+      - [Make for Windows](http://gnuwin32.sourceforge.net/packages/make.htm)
+      / [Grep for Windows](http://gnuwin32.sourceforge.net/packages/grep.htm)
+      / [sed for Windows](http://gnuwin32.sourceforge.net/packages/sed.htm)
+      / [FindUtils for Windows](http://gnuwin32.sourceforge.net/packages/findutils.htm)
 
 ## Installation
 
