@@ -52,7 +52,7 @@ By default the server will run on port 3000.
 
   - [Fastify](https://www.fastify.io/): Server framework written in Node.js
   - [Graphql](https://graphql.org/): A query language for API
-  - [Nodegit](http://www.nodegit.org/): Node.js library for git operation
+  - [isomorphic-git](https://isomorphic-git.org): Node.js library for git operation
 
 ## Who are the developers
 
