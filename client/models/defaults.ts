@@ -16,9 +16,11 @@ export interface LocalState {
 const defaults: LocalState = {
   entities: {
     repo: {
-      byId: {},
-      all: []
-    }
+      byId: { __typename: "byId" },
+      all: [],
+      __typename: "repo"
+    },
+    __typename: "entities"
   },
   currentRepo: null
 };

@@ -21,6 +21,10 @@ const GET_REGISTERED_REPOS = gql`
       name
       src
     }
+    currentRepo @client {
+      name
+      src
+    }
   }
 `;
 
@@ -38,14 +42,12 @@ const mapState = (state: IReposST): IMapState => ({
 });
 
 export const withIsActive = withState("isActive", "setIsActive", false);
-export const withCurrentRepo = withState("currentRepo", "setCurrentRepo", null);
 
 export const header = ({
   repos,
   isActive,
   setIsActive,
   currentRepo,
-  setCurrentRepo,
   loading,
   error,
   data
@@ -63,7 +65,7 @@ export const header = ({
           title="Repository"
           items={repos.map(repo => repo.name)}
           onClick={name => {
-            setCurrentRepo(name);
+            // setCurrentRepo(name);
           }}
         />
         <NavbarDropdown
@@ -97,33 +99,27 @@ export const header = ({
   </div>
 );
 
-const withQuery = Component => (props: IProps) => {
-  console.log(props);
-  const repo = props.repos.find(repo => repo.src == props.currentRepo);
-  const currentRepoSrc = repo ? repo.src : null;
-  return (
-    <Query
-      query={GET_LOCAL_BRANCHES}
-      variables={{ path: currentRepoSrc }}
-      skip={props.currentRepo === null}
-    >
-      {({ loading, error, data }) => {
-        return (
-          <Component {...props} loading={loading} error={error} data={data} />
-        );
-      }}
-    </Query>
-  );
-};
+const withQuery = Component => (props: IProps) => (
+  <Query
+    query={GET_LOCAL_BRANCHES}
+    variables={{ path: props.currentRepo.src }}
+    skip={props.currentRepo === null}
+  >
+    {({ loading, error, data }) => {
+      return (
+        <Component {...props} loading={loading} error={error} data={data} />
+      );
+    }}
+  </Query>
+);
 
 export default compose(
-  withCurrentRepo,
   withIsActive,
   graphql(GET_REGISTERED_REPOS, {
-    props: data => {
-      console.log(data);
-      return { repos: [] };
-    }
+    props: ({ data: { currentRepo, repos } }) => ({
+      currentRepo,
+      repos
+    })
   }),
   withQuery
 )(header);

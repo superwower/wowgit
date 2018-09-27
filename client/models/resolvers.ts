@@ -1,20 +1,14 @@
 export default {
+  Mutation: {},
   Query: {
     repos: (obj, args, context, info) => {
-      console.log("hoge");
-      return [];
+      return [
+        { name: "wowgit", src: "/opt/wowgit", __typename: "Repository" },
+        { name: "unknown", src: "hey", __typename: "Repository" }
+      ];
     },
     currentRepo: (obj, args, context, info) => {
-      console.log("currentRepo");
-      return null;
-    }
-  },
-  Repository: {
-    name: ({ name }, args, context, info) => {
-      return name;
-    },
-    src: ({ src }, args, context, info) => {
-      return src;
+      return { name: "wowgit", src: "/opt/wowgit", __typename: "Repository" };
     }
   }
 };

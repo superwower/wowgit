@@ -1,4 +1,4 @@
-import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost";
+import ApolloClient, { HttpLink, InMemoryCache } from "apollo-boost";
 import fetch from "isomorphic-unfetch";
 
 import { defaults, resolvers, typedefs as typeDefs } from "../../models";
