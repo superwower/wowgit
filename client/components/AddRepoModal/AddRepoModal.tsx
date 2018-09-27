@@ -2,9 +2,7 @@ import { ApolloClient, InMemoryCache } from "apollo-boost";
 import classNames from "classnames";
 import gql from "graphql-tag";
 import * as React from "react";
-import { connect } from "react-redux";
 import { compose, withHandlers, withState } from "recompose";
-import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
 import { withApolloConsumer } from "../../lib/apollo/with-apollo";
 import { IStoreST, repos } from "../../models";
@@ -160,19 +158,7 @@ export const addRepoModal: React.SFC<IProps> = ({
   </div>
 );
 
-const mapDispatch = (dispatch: Dispatch<AnyAction>): IMapDispatch =>
-  bindActionCreators(
-    {
-      addRepo: repos.creators.addRepo
-    },
-    dispatch
-  );
-
 export default compose(
   withApolloConsumer,
-  connect<{}, IMapDispatch, {}>(
-    (store: IStoreST) => ({}),
-    (dispatch: Dispatch<AnyAction>) => mapDispatch(dispatch)
-  ),
   enhance
 )(addRepoModal);
