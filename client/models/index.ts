@@ -8,6 +8,10 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { loadState, saveState } from "../lib/storage/localStorage";
 import { IReposST, reposModel, reposMT } from "./repos";
 
+export { default as defaults } from "./defaults";
+export { default as resolvers } from "./resolvers";
+export { default as typedefs } from "./typedefs";
+
 // Root store
 export interface IStoreST {
   repos: IReposST;

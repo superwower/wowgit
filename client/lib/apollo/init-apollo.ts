@@ -1,6 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache } from "apollo-boost";
 import fetch from "isomorphic-unfetch";
 
+import { defaults, resolvers, typedefs as typeDefs } from "../../models";
 import isBrowser from "../is-browser";
 
 let apolloClient = null;
@@ -14,6 +15,11 @@ const create = initialState =>
   // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
   new ApolloClient({
     cache: new InMemoryCache().restore(initialState || {}),
+    clientState: {
+      defaults,
+      resolvers,
+      typeDefs
+    },
     connectToDevTools: isBrowser,
     link: new HttpLink({
       credentials: "same-origin", // Additional fetch() options like `credentials` or `headers

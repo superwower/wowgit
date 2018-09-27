@@ -1,21 +1,25 @@
 import gql from "graphql-tag";
 import Link from "next/link";
 import * as React from "react";
-import { Query } from "react-apollo";
-import { connect } from "react-redux";
+import { graphql, Query } from "react-apollo";
 import { compose, withState } from "recompose";
-import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
 import AddRepoModal from "../components/AddRepoModal/AddRepoModal";
 import NavbarDropdown from "../components/navbarDropdown";
-import { IStoreST } from "../models";
-import { IRepoST, repoQR } from "../models/repo";
-import { IReposST } from "../models/repos";
 
 const GET_LOCAL_BRANCHES = gql`
   {
     getLocalBranches(path: "/opt/wowgit") {
       name
+    }
+  }
+`;
+
+const GET_REGISTERED_REPOS = gql`
+  {
+    repos @client {
+      name
+      src
     }
   }
 `;
@@ -57,7 +61,7 @@ export const header = ({
       <div className="navbar-start">
         <NavbarDropdown
           title="Repository"
-          items={repos.map(repo => repoQR.getDisplayName(repo))}
+          items={repos.map(repo => repo.name)}
           onClick={name => {
             setCurrentRepo(name);
           }}
@@ -94,6 +98,7 @@ export const header = ({
 );
 
 const withQuery = Component => (props: IProps) => {
+  console.log(props);
   const repo = props.repos.find(repo => repo.src == props.currentRepo);
   const currentRepoSrc = repo ? repo.src : null;
   return (
@@ -114,6 +119,11 @@ const withQuery = Component => (props: IProps) => {
 export default compose(
   withCurrentRepo,
   withIsActive,
-  connect<IMapState, {}, {}>((store: IStoreST) => mapState(store.repos)),
+  graphql(GET_REGISTERED_REPOS, {
+    props: data => {
+      console.log(data);
+      return { repos: [] };
+    }
+  }),
   withQuery
 )(header);
