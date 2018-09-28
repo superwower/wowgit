@@ -1,7 +1,11 @@
 export default `
 type Query {
-  currentRepo: Repository!
+  currentRepoName: String!
   repos: [Repository!]
+}
+
+type Mutation {
+  updateCurrentRepo(currentRepoName: $currentRepoName): Boolean!
 }
 
 type Repository {

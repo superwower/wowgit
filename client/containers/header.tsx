@@ -8,8 +8,8 @@ import AddRepoModal from "../components/AddRepoModal/AddRepoModal";
 import NavbarDropdown from "../components/navbarDropdown";
 
 const GET_LOCAL_BRANCHES = gql`
-  {
-    getLocalBranches(path: "/opt/wowgit") {
+  query getLocalBranches($path: String) {
+    getLocalBranches(path: $path) {
       name
     }
   }
@@ -21,10 +21,13 @@ const GET_REGISTERED_REPOS = gql`
       name
       src
     }
-    currentRepo @client {
-      name
-      src
-    }
+    currentRepoName @client
+  }
+`;
+
+const UPDATE_CURRENT_REPO = gql`
+  mutation updateCurrentRepo($currentRepoName: String!) {
+    updateCurrentRepo(currentRepoName: $currentRepoName) @client
   }
 `;
 
@@ -35,6 +38,7 @@ export interface IMapState {
 export interface IProps extends IMapState {
   isActive: boolean; // is the modal for adding repository shown?
   setIsActive: (isActive: boolean) => void;
+  updateCurrentRepo: (currentRepo: any) => void;
 }
 
 const mapState = (state: IReposST): IMapState => ({
@@ -47,10 +51,9 @@ export const header = ({
   repos,
   isActive,
   setIsActive,
-  currentRepo,
-  loading,
-  error,
-  data
+  currentRepoName,
+  localBranches,
+  updateCurrentRepo
 }: IProps) => (
   <div className="navbar is-primary">
     <div className="navbar-brand">
@@ -62,19 +65,18 @@ export const header = ({
     <div className="navbar-menu">
       <div className="navbar-start">
         <NavbarDropdown
-          title="Repository"
+          title={currentRepoName || "Repository"}
           items={repos.map(repo => repo.name)}
           onClick={name => {
-            // setCurrentRepo(name);
+            updateCurrentRepo({ variables: { currentRepoName: name } });
           }}
         />
         <NavbarDropdown
           title="Branch"
-          items={
-            data.getLocalBranches
-              ? data.getLocalBranches.map(branch => branch.name)
-              : []
-          }
+          items={localBranches ? localBranches.map(branch => branch.name) : []}
+          onClick={name => {
+            console.log(`Branch ${name} was clicked`);
+          }}
         />
       </div>
       <div className="navbar-right">
@@ -99,27 +101,29 @@ export const header = ({
   </div>
 );
 
-const withQuery = Component => (props: IProps) => (
-  <Query
-    query={GET_LOCAL_BRANCHES}
-    variables={{ path: props.currentRepo.src }}
-    skip={props.currentRepo === null}
-  >
-    {({ loading, error, data }) => {
-      return (
-        <Component {...props} loading={loading} error={error} data={data} />
-      );
-    }}
-  </Query>
-);
-
 export default compose(
   withIsActive,
   graphql(GET_REGISTERED_REPOS, {
-    props: ({ data: { currentRepo, repos } }) => ({
-      currentRepo,
+    props: ({ data: { currentRepoName, repos } }) => ({
+      currentRepoName,
       repos
     })
   }),
-  withQuery
+  graphql(UPDATE_CURRENT_REPO, {
+    name: "updateCurrentRepo"
+  }),
+  graphql(GET_LOCAL_BRANCHES, {
+    props: ({ data: { getLocalBranches } }) => ({
+      localBranches: getLocalBranches
+    }),
+    skip: ({ currentRepoName }) => currentRepoName === null,
+    options: ({ currentRepoName, repos }) => {
+      const repo = repos.find(repo => repo.name === currentRepoName);
+      return {
+        variables: {
+          path: repo && repo.src
+        }
+      };
+    }
+  })
 )(header);

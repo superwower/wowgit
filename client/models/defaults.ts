@@ -10,7 +10,7 @@ export interface LocalState {
       all: number[];
     };
   };
-  currentRepo: number | null;
+  currentRepoName: string | null;
 }
 
 const defaults: LocalState = {
@@ -22,7 +22,7 @@ const defaults: LocalState = {
     },
     __typename: "entities"
   },
-  currentRepo: null
+  currentRepoName: null
 };
 
 export default defaults;
