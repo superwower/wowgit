@@ -2,6 +2,7 @@ import { ApolloClient, InMemoryCache } from "apollo-boost";
 import classNames from "classnames";
 import gql from "graphql-tag";
 import * as React from "react";
+import { graphql, Query } from "react-apollo";
 import { compose, withHandlers, withState } from "recompose";
 
 import { withApolloConsumer } from "../../lib/apollo/with-apollo";
@@ -15,13 +16,16 @@ const IS_GIT_REPO = gql`
   }
 `;
 
+const REGISTER_REPO = gql`
+  mutation registerRepository($newRepo: Repository) {
+    registerRepository(newRepo: $newRepo) @client
+  }
+`;
+
 export type ImportType = "LOCAL" | "REMOTE";
 
-interface IMapDispatch {
-  addRepo: (value: { name: string | null; src: string }) => void;
-}
-
-export interface IProps extends IMapDispatch {
+export interface IProps {
+  registerRepository: (repo: any) => void; // TODO: use narrower type
   isActive: boolean; // is the modal shown?
   client: ApolloClient<InMemoryCache>;
   closeModal: () => void;
@@ -49,7 +53,7 @@ export const enhance = compose(
   withState("src", "setSrc", ""),
   withHandlers({
     onAddClick: (props: IProps) => async () => {
-      const { name, src, client } = props;
+      const { name, src, client, registerRepository } = props;
       const result: any = await client.query({
         query: IS_GIT_REPO,
         variables: {
@@ -57,7 +61,7 @@ export const enhance = compose(
         }
       });
       if (result.data.isGitRepository) {
-        props.addRepo({ name, src });
+        registerRepository({ variables: { name, src } });
         resetForm(props);
         props.closeModal();
         return;
@@ -87,7 +91,8 @@ export const addRepoModal: React.SFC<IProps> = ({
   name,
   src,
   onAddClick,
-  onCancelClick
+  onCancelClick,
+  registerRepository
 }: IProps) => (
   <div className={classNames("modal", { "is-active": isActive })}>
     <div className="modal-background" />
@@ -160,5 +165,8 @@ export const addRepoModal: React.SFC<IProps> = ({
 
 export default compose(
   withApolloConsumer,
+  graphql(REGISTER_REPO, {
+    name: "registerRepository"
+  }),
   enhance
 )(addRepoModal);

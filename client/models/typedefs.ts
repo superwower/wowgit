@@ -5,7 +5,8 @@ type Query {
 }
 
 type Mutation {
-  updateCurrentRepo(currentRepoName: $currentRepoName): Boolean!
+  registerRepository(newRepo: Repository): Boolean!
+  updateCurrentRepo(currentRepoName: String!): Boolean!
 }
 
 type Repository {
