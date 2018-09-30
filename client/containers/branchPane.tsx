@@ -7,8 +7,9 @@ import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
 import { withApolloConsumer } from "../lib/apollo/with-apollo";
 import RemoteBranches from "../components/remoteBranches";
-import { IStoreST, remotesAggs } from "../models";
+import { IStoreST, remotes as remotesAggs } from "../models";
 import { IRemotesST } from "../models/remotes";
+import { IReposST } from "../models/repos";
 
 const QUERY_REMOTES = gql`
   query remotes($path: String) {
@@ -22,6 +23,7 @@ const QUERY_REMOTES = gql`
 `;
 
 export interface IProps {
+  repos: IReposST;
   remotes: IRemotesST;
   fetchRemotes: () => void;
   client: ApolloClient<InMemoryCache>;
@@ -45,7 +47,15 @@ export const branchPane = ({ remotes, fetchRemotes }: IProps) => (
 );
 
 const lifeCycleFunctions: ReactLifeCycleFunctions = {
-  componentDidMount() {
+  async componentDidMount() {
+    this.props.fetchRemotes();
+    const result: any = await this.props.client.query({
+      query: QUERY_REMOTES,
+      variables: {
+        path: "./"
+      }
+    });
+    console.log(result)
     this.props.fetchRemotes();
   }
 };
@@ -61,7 +71,10 @@ const mapDispatch = (dispatch: Dispatch<AnyAction>) =>
 export default compose(
   withApolloConsumer,
   connect(
-    (store: IStoreST) => ({ remotes: store.remotes }),
+    (store: IStoreST) => ({
+      remotes : store.remotes,
+      repos : store.repos
+    }),
     (dispatch: Dispatch<AnyAction>) => mapDispatch(dispatch)
   ),
   lifecycle(lifeCycleFunctions)
