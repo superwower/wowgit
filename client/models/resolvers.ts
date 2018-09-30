@@ -2,12 +2,6 @@ import gql from "graphql-tag";
 
 export default {
   Mutation: {
-    updateCurrentRepo: (_, { currentRepoName }, { cache }) => {
-      const data = { currentRepoName };
-      cache.writeData({ data });
-      // See why we need to return null: https://github.com/apollographql/apollo-link-state/issues/160
-      return null;
-    },
     registerRepository: (_, { input: { name, src } }, { cache }) => {
       const query = gql`
         {
@@ -22,16 +16,22 @@ export default {
 
       const newId = Math.max(repos.map(repo => +repo.id)) + 1;
       const newRepo = {
+        __typename: "Repository",
         id: `${newId}`, // convert number to string
         name,
-        src,
-        __typename: "Repository"
+        src
       };
       const data = {
         repos: [...repos, newRepo]
       };
       cache.writeQuery({ query, data });
       return newRepo;
+    },
+    updateCurrentRepo: (_, { currentRepoName }, { cache }) => {
+      const data = { currentRepoName };
+      cache.writeData({ data });
+      // See why we need to return null: https://github.com/apollographql/apollo-link-state/issues/160
+      return null;
     }
   },
   Query: {

@@ -1,25 +1,26 @@
 type ID = string;
-export interface Repository {
+
+export interface IRepository {
+  __typename: string;
   id: ID;
   name: string | null;
   src: string;
-  __typename: string;
 }
 
-export interface LocalState {
+export interface ILocalState {
   entities: {
-    repo: Repository[];
     __typename: string;
+    repo: Repository[];
   };
   currentRepoName: string | null;
 }
 
-const defaults: LocalState = {
+const defaults: ILocalState = {
+  currentRepoName: null,
   entities: {
-    repos: [],
-    __typename: "entities"
-  },
-  currentRepoName: null
+    __typename: "entities",
+    repos: []
+  }
 };
 
 export default defaults;

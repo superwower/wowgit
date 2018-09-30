@@ -70,7 +70,7 @@ export const header = ({
           title="Branch"
           items={localBranches ? localBranches.map(branch => branch.name) : []}
           onClick={name => {
-            console.log(`Branch ${name} was clicked`);
+            alert(`branch ${name} clicked`);
           }}
         />
       </div>
@@ -108,17 +108,17 @@ export default compose(
     name: "updateCurrentRepo"
   }),
   graphql(GET_LOCAL_BRANCHES, {
+    options: ({ currentRepoName, repos }) => {
+      const currentRepo = repos.find(repo => repo.name === currentRepoName);
+      return {
+        variables: {
+          path: currentRepo && currenRepo.src
+        }
+      };
+    },
     props: ({ data: { getLocalBranches } }) => ({
       localBranches: getLocalBranches
     }),
-    skip: ({ currentRepoName }) => currentRepoName === null,
-    options: ({ currentRepoName, repos }) => {
-      const repo = repos.find(repo => repo.name === currentRepoName);
-      return {
-        variables: {
-          path: repo && repo.src
-        }
-      };
-    }
+    skip: ({ currentRepoName }) => currentRepoName === null
   })
 )(header);
