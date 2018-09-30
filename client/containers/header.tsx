@@ -31,19 +31,14 @@ const UPDATE_CURRENT_REPO = gql`
   }
 `;
 
-export interface IMapState {
-  repos: IRepoST[];
-}
-
-export interface IProps extends IMapState {
+export interface IProps {
   isActive: boolean; // is the modal for adding repository shown?
   setIsActive: (isActive: boolean) => void;
   updateCurrentRepo: (currentRepo: any) => void;
+  repos: Repository[];
+  currentRepoName: string;
+  localBranches: Branch[];
 }
-
-const mapState = (state: IReposST): IMapState => ({
-  repos: state.items
-});
 
 export const withIsActive = withState("isActive", "setIsActive", false);
 

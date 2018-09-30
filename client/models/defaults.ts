@@ -16,9 +16,7 @@ export interface LocalState {
 
 const defaults: LocalState = {
   entities: {
-    repos: [
-      { id: "1", src: "/opt/wowgit", name: "wowgit", __typename: "Repository" }
-    ],
+    repos: [],
     __typename: "entities"
   },
   currentRepoName: null

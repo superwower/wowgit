@@ -38,7 +38,7 @@ export default {
         }
       };
 
-      cache.writeQuery({ query, data });
+      cache.writeData({ data });
       return newRepo;
     }
   },
