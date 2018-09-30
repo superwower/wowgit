@@ -1,15 +1,30 @@
+import { ApolloClient, InMemoryCache } from "apollo-boost";
+import gql from "graphql-tag";
 import * as React from "react";
 import { connect } from "react-redux";
 import { compose, lifecycle, ReactLifeCycleFunctions } from "recompose";
 import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
+import { withApolloConsumer } from "../lib/apollo/with-apollo";
 import RemoteBranches from "../components/remoteBranches";
 import { IStoreST, remotesAggs } from "../models";
 import { IRemotesST } from "../models/remotes";
 
+const QUERY_REMOTES = gql`
+  query remotes($path: String) {
+    remotes(path: $path) {
+      name
+      branches {
+        name
+      }
+    }
+  }
+`;
+
 export interface IProps {
   remotes: IRemotesST;
   fetchRemotes: () => void;
+  client: ApolloClient<InMemoryCache>;
 }
 
 export const branchPane = ({ remotes, fetchRemotes }: IProps) => (
@@ -44,6 +59,7 @@ const mapDispatch = (dispatch: Dispatch<AnyAction>) =>
   );
 
 export default compose(
+  withApolloConsumer,
   connect(
     (store: IStoreST) => ({ remotes: store.remotes }),
     (dispatch: Dispatch<AnyAction>) => mapDispatch(dispatch)
