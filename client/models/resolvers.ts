@@ -11,18 +11,14 @@ export default {
     registerRepository: (_, { input: { name, src } }, { cache }) => {
       const query = gql`
         {
-          entities @client {
-            repos {
-              id
-              name
-              src
-            }
+          repos @client {
+            id
+            name
+            src
           }
         }
       `;
-      const {
-        entities: { repos }
-      } = cache.readQuery({ query });
+      const { repos } = cache.readQuery({ query });
 
       const newId = Math.max(repos.map(repo => +repo.id)) + 1;
       const newRepo = {
@@ -32,13 +28,9 @@ export default {
         __typename: "Repository"
       };
       const data = {
-        entities: {
-          repos: [...repos, newRepo],
-          __typename: "entities"
-        }
+        repos: [...repos, newRepo]
       };
-
-      cache.writeData({ data });
+      cache.writeQuery({ query, data });
       return newRepo;
     }
   },
