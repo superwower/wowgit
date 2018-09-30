@@ -10,6 +10,7 @@ type Mutation {
 }
 
 type Repository {
+  id: ID
   name: String!
   src: String
 }

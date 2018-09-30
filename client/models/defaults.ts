@@ -1,25 +1,24 @@
+type ID = string;
 export interface Repository {
+  id: ID;
   name: string | null;
   src: string;
+  __typename: string;
 }
 
 export interface LocalState {
   entities: {
-    repo: {
-      byId: { [id: number]: Repository };
-      all: number[];
-    };
+    repo: Repository[];
+    __typename: string;
   };
   currentRepoName: string | null;
 }
 
 const defaults: LocalState = {
   entities: {
-    repo: {
-      byId: { __typename: "byId" },
-      all: [],
-      __typename: "repo"
-    },
+    repos: [
+      { id: "1", src: "/opt/wowgit", name: "wowgit", __typename: "Repository" }
+    ],
     __typename: "entities"
   },
   currentRepoName: null

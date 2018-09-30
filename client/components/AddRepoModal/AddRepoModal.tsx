@@ -17,8 +17,8 @@ const IS_GIT_REPO = gql`
 `;
 
 const REGISTER_REPO = gql`
-  mutation registerRepository($newRepo: Repository) {
-    registerRepository(newRepo: $newRepo) @client
+  mutation registerRepository($input: Repository) {
+    registerRepository(input: $input) @client
   }
 `;
 
@@ -60,8 +60,9 @@ export const enhance = compose(
           path: src
         }
       });
+
       if (result.data.isGitRepository) {
-        registerRepository({ variables: { name, src } });
+        registerRepository({ variables: { input: { name, src } } });
         resetForm(props);
         props.closeModal();
         return;
