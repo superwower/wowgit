@@ -112,7 +112,7 @@ export default compose(
       const currentRepo = repos.find(repo => repo.name === currentRepoName);
       return {
         variables: {
-          path: currentRepo && currenRepo.src
+          path: currentRepo && currentRepo.src
         }
       };
     },
