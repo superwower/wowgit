@@ -93,7 +93,7 @@
     "typescript": "^3.0.1"
   },
   "devDependencies": {
-    "@types/jest": "23.3.2",
+    "@types/jest": "23.3.3",
     "jest": "23.6.0",
     "prettier": "1.14.3",
     "react-test-renderer": "16.5.2",
