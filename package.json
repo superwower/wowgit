@@ -20,27 +20,25 @@
   "jest": {
     "globals": {
       "ts-jest": {
-        "enableTsDiagnostics": true,
-        "skipBabel": true
+        "diagnostics": true
       }
-    },
-    "transform": {
-      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
     "moduleFileExtensions": [
-      "ts",
-      "tsx",
       "js",
+      "json",
       "jsx",
-      "json"
+      "ts",
+      "tsx"
     ],
     "testURL": "http://localhost/",
     "collectCoverageFrom": [
       "**/*.{ts,tsx}",
       "!**/*.d.ts",
       "!**/*.{test,spec}.{ts,tsx}"
-    ]
+    ],
+    "preset": "ts-jest",
+    "testMatch": null
   },
   "repository": {
     "type": "git",
