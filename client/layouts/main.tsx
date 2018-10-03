@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import Header from "../containers/header";
-import { store } from "../models";
 
 // tslint:disable-next-line
 const style = require("../styles/style.scss");

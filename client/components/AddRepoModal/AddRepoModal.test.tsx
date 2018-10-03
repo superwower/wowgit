@@ -18,13 +18,13 @@ import {
  */
 const createProps = (props: { [K in keyof IProps]?: IProps[K] }): IProps => ({
   activeTab: "REMOTE",
-  addRepo: () => {},
   client: {} as any, // TODO: propery handle
   closeModal: () => {},
   isActive: false,
   name: "",
   onAddClick: () => Promise.resolve(),
   onCancelClick: () => {},
+  registerRepository: () => {},
   setActiveTab: activeTab => {},
   setName: name => {},
   setSrc: src => {},
@@ -51,13 +51,13 @@ describe("recompose HOCs", () => {
     it(`1) adds repo to repo list with the specified name and src which is git repo
         2) clears name and src when Add button is clicked
         3) closes modal`, async () => {
-      const addRepo = jest.fn();
+      const registerRepository = jest.fn();
       const closeModal = jest.fn();
       /* tslint:disable-next-line:variable-name*/
       const Enhanced = enhance(MockComponent);
       const testRenderer = TestRenderer.create(
         <Enhanced
-          addRepo={addRepo}
+          registerRepository={registerRepository}
           closeModal={closeModal}
           client={{
             query() {
@@ -76,9 +76,13 @@ describe("recompose HOCs", () => {
       await instance.props.onAddClick();
       expect(instance.props.name).toBe("");
       expect(instance.props.src).toBe("");
-      expect(addRepo).toHaveBeenCalledWith({
-        name: "repo name",
-        src: "repo src"
+      expect(registerRepository).toHaveBeenCalledWith({
+        variables: {
+          input: {
+            name: "repo name",
+            src: "repo src"
+          }
+        }
       });
       expect(closeModal).toHaveBeenCalledTimes(1);
     });

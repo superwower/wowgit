@@ -6,8 +6,6 @@ import { graphql, Query } from "react-apollo";
 import { compose, withHandlers, withState } from "recompose";
 
 import { withApolloConsumer } from "../../lib/apollo/with-apollo";
-import { IStoreST, repos } from "../../models";
-import { reposMT } from "../../models/repos";
 import InputBox from "./InputBox";
 
 const IS_GIT_REPO = gql`
@@ -81,7 +79,6 @@ export const enhance = compose(
  *
  */
 export const addRepoModal: React.SFC<IProps> = ({
-  addRepo,
   isActive,
   client,
   closeModal,
@@ -99,8 +96,7 @@ export const addRepoModal: React.SFC<IProps> = ({
     <div className="modal-background" />
     <div className="modal-card">
       <header className="modal-card-head">
-        >
-        <p className="modal-card-title">New Repository</p>
+        ><p className="modal-card-title">New Repository</p>
         <button className="delete" onClick={closeModal} />
       </header>
       <section className="modal-card-body">

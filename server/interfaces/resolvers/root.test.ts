@@ -1,6 +1,7 @@
 import { IFieldResolver } from "graphql-tools";
 
 import QueryService from "../../app/query_service";
+import Branch from "../../domain/branch";
 import File from "../../domain/file";
 import GitService from "../../domain/git_service";
 import Status from "../../domain/status";
@@ -18,6 +19,10 @@ class MockGitService implements GitService {
 
   public async isGitRepository(path: string): Promise<boolean> {
     return true;
+  }
+
+  public async getLocalBranches(path: string): Promise<Branch[]> {
+    return [new Branch("branch1"), new Branch("branch2")];
   }
 }
 
