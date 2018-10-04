@@ -4,8 +4,10 @@ import * as React from "react";
 import { graphql, Query } from "react-apollo";
 import { compose, withState } from "recompose";
 
+import Branch from "../../server/domain/branch";
 import AddRepoModal from "../components/AddRepoModal/AddRepoModal";
 import NavbarDropdown from "../components/navbarDropdown";
+import { IRepository } from "../models/typings";
 
 const GET_LOCAL_BRANCHES = gql`
   query getLocalBranches($path: String) {
@@ -35,7 +37,7 @@ export interface IProps {
   isActive: boolean; // is the modal for adding repository shown?
   setIsActive: (isActive: boolean) => void;
   updateCurrentRepo: (currentRepo: any) => void;
-  repos: Repository[];
+  repos: IRepository[];
   currentRepoName: string;
   localBranches: Branch[];
 }
@@ -98,7 +100,12 @@ export const header = ({
 
 export default compose(
   withIsActive,
-  graphql(GET_REGISTERED_REPOS, {
+  graphql<
+    {},
+    { currentRepoName: string; repos: IRepository[] },
+    {},
+    { currentRepoName: string; repos: IRepository[] }
+  >(GET_REGISTERED_REPOS, {
     props: ({ data: { currentRepoName, repos } }) => ({
       currentRepoName,
       repos
@@ -107,7 +114,12 @@ export default compose(
   graphql(UPDATE_CURRENT_REPO, {
     name: "updateCurrentRepo"
   }),
-  graphql(GET_LOCAL_BRANCHES, {
+  graphql<
+    { currentRepoName: string; repos: IRepository[] },
+    { getLocalBranches: Branch[] },
+    { path: string | undefined },
+    { localBranches: Branch[] }
+  >(GET_LOCAL_BRANCHES, {
     options: ({ currentRepoName, repos }) => {
       const currentRepo = repos.find(repo => repo.name === currentRepoName);
       return {

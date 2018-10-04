@@ -1,16 +1,9 @@
-type ID = string;
-
-export interface IRepository {
-  __typename: string;
-  id: ID;
-  name: string | null;
-  src: string;
-}
+import { ID, IRepository } from "./typings";
 
 export interface ILocalState {
   entities: {
     __typename: string;
-    repo: Repository[];
+    repos: IRepository[];
   };
   currentRepoName: string | null;
 }
