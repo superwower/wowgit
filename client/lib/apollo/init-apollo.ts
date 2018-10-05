@@ -2,7 +2,8 @@ import {
   ApolloClient,
   ApolloLink,
   HttpLink,
-  InMemoryCache
+  InMemoryCache,
+  NormalizedCacheObject
 } from "apollo-boost";
 import { withClientState } from "apollo-link-state";
 import fetch from "isomorphic-unfetch";
@@ -19,13 +20,8 @@ if (!isBrowser) {
 
 const create = initialState => {
   const cache = new InMemoryCache().restore(initialState || {});
-  return new ApolloClient({
+  return new ApolloClient<NormalizedCacheObject>({
     cache,
-    clientState: {
-      defaults,
-      resolvers,
-      typeDefs
-    },
     connectToDevTools: isBrowser,
     link: ApolloLink.from([
       withClientState({
