@@ -1,9 +1,7 @@
-# import Author from 'author.graphql'
 # import Branch from 'branch.graphql'
 # import Status from 'status.graphql'
 
 type Query {
-  authors: [Author]
   status(path: String): Status
   isGitRepository(path: String): Boolean
   getLocalBranches(path: String): [Branch!]!
