@@ -28,8 +28,8 @@ By default the server will run on port 3000.
 
 ### How to start development
 
-First time, type the following instead of `npm install`.
-(Usually, you can skip the next time.)
+First time, type the following instead of `npm install`.  
+(Usually, you only need to run this for the first time)
 
 ```bash
 make install
@@ -51,7 +51,7 @@ By default the server will run on port 3000.
 - Backend
 
   - [Fastify](https://www.fastify.io/): Server framework written in Node.js
-  - [Graphql](https://graphql.org/): A query language for API
+  - [GraphQL](https://graphql.org/): A query language for API
   - [isomorphic-git](https://isomorphic-git.org): Node.js library for git operation
 
 ## Who are the developers
