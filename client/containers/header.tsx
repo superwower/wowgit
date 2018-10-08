@@ -2,10 +2,10 @@ import gql from "graphql-tag";
 import Link from "next/link";
 import * as React from "react";
 import { graphql, Query } from "react-apollo";
-import { compose, withState } from "recompose";
+import { compose, withProps, withState } from "recompose";
 
 import Branch from "../../server/domain/branch";
-import AddRepoModal from "../components/AddRepoModal/AddRepoModal";
+import addRepoModal from "../components/AddRepoModal/AddRepoModal";
 import NavbarDropdown from "../components/navbarDropdown";
 import { IRepository } from "../models/typings";
 
@@ -34,9 +34,12 @@ const UPDATE_CURRENT_REPO = gql`
 `;
 
 export interface IProps {
+  AddRepoModal: any;
   isActive: boolean; // is the modal for adding repository shown?
   setIsActive: (isActive: boolean) => void;
-  updateCurrentRepo: (currentRepo: any) => void;
+  updateCurrentRepo: (
+    currentRepo: { variables: { currentRepoName: string } }
+  ) => void;
   repos: IRepository[];
   currentRepoName: string;
   localBranches: Branch[];
@@ -45,6 +48,7 @@ export interface IProps {
 export const withIsActive = withState("isActive", "setIsActive", false);
 
 export const HeaderPresenter = ({
+  AddRepoModal,
   repos,
   isActive,
   setIsActive,
@@ -100,16 +104,19 @@ export const HeaderPresenter = ({
 
 export const HeaderContainer = compose(
   withIsActive,
+  withProps({ AddRepoModal: addRepoModal }),
   graphql<
     {},
     { currentRepoName: string; repos: IRepository[] },
     {},
     { currentRepoName: string; repos: IRepository[] }
   >(GET_REGISTERED_REPOS, {
-    props: ({ data: { currentRepoName, repos } }) => ({
-      currentRepoName,
-      repos
-    })
+    props: ({ data: { currentRepoName, repos } }) => {
+      return {
+        currentRepoName,
+        repos
+      };
+    }
   }),
   graphql(UPDATE_CURRENT_REPO, {
     name: "updateCurrentRepo"
@@ -131,7 +138,7 @@ export const HeaderContainer = compose(
     props: ({ data: { getLocalBranches } }) => ({
       localBranches: getLocalBranches
     }),
-    skip: ({ currentRepoName }) => currentRepoName === null
+    skip: ({ repos, currentRepoName }) => !(repos && currentRepoName)
   })
 );
 
