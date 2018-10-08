@@ -4,6 +4,9 @@ build:
   # The steps that will be executed on build
   steps:
     - script:
+        name: install dependencies
+        code: apk update && apk add bash curl git
+    - script:
         name: echo nodejs information
         code: |
           echo "node version $(node -v) running"
@@ -25,4 +28,7 @@ build:
 
     - script:
         name: upload coverage to codecov
-        code: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
+        code: |
+            curl -s https://codecov.io/bash > codecov.sh
+            bash codecov.sh -t $CODECOV_TOKEN
+            rm codecov.sh
