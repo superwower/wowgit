@@ -32,7 +32,7 @@ const create = initialState => {
       }),
       new HttpLink({
         credentials: "same-origin", // Additional fetch() options like `credentials` or `headers
-        uri: "http://localhost:3000/graphql" // Server URL (must be absolute)
+        uri: "graphql"
       })
     ]),
     ssrMode: !isBrowser // Disables forceFetch on the server (so queries are only run once)
