@@ -10,11 +10,11 @@
     "build:clean": "rm -rf client/.next",
     "clean": "rm -rf node_modules client/.next",
     "start": "NODE_ENV=production ts-node server/index.ts",
-    "test": "npm run jest",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "format": "prettier --list-different \"{**/*,*}.{js,ts,jsx,tsx,json,graphql}\"",
     "format:fix": "prettier --write \"{**/*,*}.{js,ts,jsx,tsx,json,graphql}\"",
     "lint": "npm run format && tslint -c tslint.json ./{*,**/*}.{ts,tsx}",
-    "jest": "jest",
     "coverage": "jest --coverage"
   },
   "jest": {
