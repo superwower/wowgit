@@ -1,4 +1,4 @@
-box: node:8.11.3-alpine
+box: node:8.12.0-alpine
 # Build definition
 build:
   # The steps that will be executed on build
@@ -13,9 +13,16 @@ build:
         name: install packages
         code: npm ci
 
-    - npm-test
-
     - script:
         name: lint
         code: npm run lint
 
+    - npm-test
+
+    - script:
+        name: coverage
+        code: npm run coverage
+
+    - script:
+        name: upload coverage to codecov
+        code: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
