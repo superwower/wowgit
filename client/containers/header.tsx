@@ -44,7 +44,7 @@ export interface IProps {
 
 export const withIsActive = withState("isActive", "setIsActive", false);
 
-export const header = ({
+export const HeaderPresenter = ({
   repos,
   isActive,
   setIsActive,
@@ -98,7 +98,7 @@ export const header = ({
   </div>
 );
 
-export default compose(
+export const HeaderContainer = compose(
   withIsActive,
   graphql<
     {},
@@ -133,4 +133,6 @@ export default compose(
     }),
     skip: ({ currentRepoName }) => currentRepoName === null
   })
-)(header);
+);
+
+export default HeaderContainer(HeaderPresenter);
