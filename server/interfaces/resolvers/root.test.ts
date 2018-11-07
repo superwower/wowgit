@@ -4,6 +4,7 @@ import QueryService from "../../app/query_service";
 import File from "../../domain/file";
 import GitService from "../../domain/git_service";
 import Status from "../../domain/status";
+import Remote from "../../domain/remote";
 import resolver from "./root";
 
 class MockGitService implements GitService {
@@ -14,6 +15,11 @@ class MockGitService implements GitService {
       [new File("/path/to/deleted/file")]
     );
     return Promise.resolve(status);
+  }
+
+  public getRemotes(repositoryPath: string): Promise<Remote[]> {
+    const remotes = [new Remote("origin"), new Remote("upstream")];
+    return Promise.resolve(remotes);
   }
 
   public async isGitRepository(path: string): Promise<boolean> {

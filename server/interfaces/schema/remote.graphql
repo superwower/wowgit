@@ -1,0 +1,6 @@
+# import Branch from 'branch.graphql'
+
+type Remote {
+  name: String!
+  branches: [Branch]
+}

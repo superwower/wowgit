@@ -3,6 +3,8 @@ import * as git from "isomorphic-git";
 
 import File from "../domain/file";
 import IGitService from "../domain/git_service";
+import Branch from "../domain/branch";
+import Remote from "../domain/remote";
 import Status from "../domain/status";
 
 enum STATUS {
@@ -63,5 +65,25 @@ export default class GitService implements IGitService {
     } catch (err) {
       return false;
     }
+  }
+
+  /**
+   * Get remotes of a repostiory
+   * @param repositoryPath path to git repository path
+   * @return promise of Remote objects
+   */
+  public async getRemotes(repositoryPath: string): Promise<Remote[]> {
+    const ret = [];
+    const remotes = await git.listRemotes({ dir: repositoryPath });
+    for (let remo of remotes) {
+      const remote = new Remote(remo.remote);
+      const remoteBranches = await git.listBranches({
+        dir: repositoryPath,
+        remote: remo.remote
+      });
+      remoteBranches.forEach(b => remote.pushBranch(new Branch(b)));
+      ret.push(remote);
+    }
+    return ret;
   }
 }

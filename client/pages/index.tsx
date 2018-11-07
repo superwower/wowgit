@@ -9,13 +9,13 @@ export default () => (
   <Page>
     <div className="columns">
       <div className="column">
-        <GraphPane />
+        <BranchPane />
       </div>
       <div className="column is-half">
-        <CommitPane />
+        <GraphPane />
       </div>
       <div className="column">
-        <BranchPane />
+        <CommitPane />
       </div>
     </div>
   </Page>

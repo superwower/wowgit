@@ -18,6 +18,7 @@ export const main = async () => {
     "schema",
     "index.graphql"
   );
+  const nodeGitService = new NodeGitService();
   const context = {
     queryService: new QueryService(new NodeGitService())
   };

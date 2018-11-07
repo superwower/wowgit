@@ -1,8 +1,6 @@
-import * as Git from "nodegit";
-
-import File from "../domain/file";
 import GitService from "../domain/git_service";
 import Status from "../domain/status";
+import Remote from "../domain/remote";
 
 /**
  * A service that access the status of git repository.
@@ -26,6 +24,15 @@ export default class QueryService {
    */
   public async getStatus(repositoryPath: string): Promise<Status> {
     return this.gitService.getStatus(repositoryPath);
+  }
+
+  /**
+   * Get the status of a repostiory
+   * @param repositoryPath path to git repository path
+   * @return promise of Status object
+   */
+  public async getRemotes(repositoryPath: string): Promise<Remote[]> {
+    return this.gitService.getRemotes(repositoryPath);
   }
 
   /**
