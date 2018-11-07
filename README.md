@@ -1,4 +1,6 @@
 # wowgit
+[![wercker status](https://app.wercker.com/status/ef3f7acb774a5673007c012a30f40065/s/master "wercker status")](https://app.wercker.com/project/byKey/ef3f7acb774a5673007c012a30f40065)
+[![codecov](https://codecov.io/gh/superwower/wowgit/branch/master/graph/badge.svg)](https://codecov.io/gh/superwower/wowgit)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 Git web client that wows you

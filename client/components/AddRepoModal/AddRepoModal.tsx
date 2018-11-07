@@ -95,7 +95,6 @@ export const addRepoModal: React.SFC<IProps> = ({
     <div className="modal-background" />
     <div className="modal-card">
       <header className="modal-card-head">
-        >
         <p className="modal-card-title">New Repository</p>
         <button className="delete" onClick={closeModal} />
       </header>
