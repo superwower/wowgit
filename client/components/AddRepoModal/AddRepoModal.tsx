@@ -2,13 +2,10 @@ import { ApolloClient, InMemoryCache } from "apollo-boost";
 import classNames from "classnames";
 import gql from "graphql-tag";
 import * as React from "react";
-import { connect } from "react-redux";
+import { graphql, Query } from "react-apollo";
 import { compose, withHandlers, withState } from "recompose";
-import { AnyAction, bindActionCreators, Dispatch } from "redux";
 
 import { withApolloConsumer } from "../../lib/apollo/with-apollo";
-import { IStoreST, repos } from "../../models";
-import { reposMT } from "../../models/repos";
 import InputBox from "./InputBox";
 
 const IS_GIT_REPO = gql`
@@ -17,13 +14,16 @@ const IS_GIT_REPO = gql`
   }
 `;
 
+const REGISTER_REPO = gql`
+  mutation registerRepository($input: Repository) {
+    registerRepository(input: $input) @client
+  }
+`;
+
 export type ImportType = "LOCAL" | "REMOTE";
 
-interface IMapDispatch {
-  addRepo: (value: { name: string | null; src: string }) => void;
-}
-
-export interface IProps extends IMapDispatch {
+export interface IProps {
+  registerRepository: (repo: any) => void; // TODO: use narrower type
   isActive: boolean; // is the modal shown?
   client: ApolloClient<InMemoryCache>;
   closeModal: () => void;
@@ -51,15 +51,16 @@ export const enhance = compose(
   withState("src", "setSrc", ""),
   withHandlers({
     onAddClick: (props: IProps) => async () => {
-      const { name, src, client } = props;
+      const { name, src, client, registerRepository } = props;
       const result: any = await client.query({
         query: IS_GIT_REPO,
         variables: {
           path: src
         }
       });
+
       if (result.data.isGitRepository) {
-        props.addRepo({ name, src });
+        registerRepository({ variables: { input: { name, src } } });
         resetForm(props);
         props.closeModal();
         return;
@@ -78,7 +79,6 @@ export const enhance = compose(
  *
  */
 export const addRepoModal: React.SFC<IProps> = ({
-  addRepo,
   isActive,
   client,
   closeModal,
@@ -89,7 +89,8 @@ export const addRepoModal: React.SFC<IProps> = ({
   name,
   src,
   onAddClick,
-  onCancelClick
+  onCancelClick,
+  registerRepository
 }: IProps) => (
   <div className={classNames("modal", { "is-active": isActive })}>
     <div className="modal-background" />
@@ -159,19 +160,10 @@ export const addRepoModal: React.SFC<IProps> = ({
   </div>
 );
 
-const mapDispatch = (dispatch: Dispatch<AnyAction>): IMapDispatch =>
-  bindActionCreators(
-    {
-      addRepo: repos.creators.addRepo
-    },
-    dispatch
-  );
-
 export default compose(
   withApolloConsumer,
-  connect<{}, IMapDispatch, {}>(
-    (store: IStoreST) => ({}),
-    (dispatch: Dispatch<AnyAction>) => mapDispatch(dispatch)
-  ),
+  graphql(REGISTER_REPO, {
+    name: "registerRepository"
+  }),
   enhance
 )(addRepoModal);

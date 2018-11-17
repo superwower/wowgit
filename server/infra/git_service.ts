@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as git from "isomorphic-git";
 
+import Branch from "../domain/branch";
 import File from "../domain/file";
 import IGitService from "../domain/git_service";
 import Status from "../domain/status";
@@ -63,5 +64,15 @@ export default class GitService implements IGitService {
     } catch (err) {
       return false;
     }
+  }
+
+  /**
+   * Get a list of local branches
+   * @param { string } path path to git repository path
+   * @return { Promise<Branch[]> } promise of array of branches
+   */
+  public async getLocalBranches(path: string): Promise<Branch[]> {
+    const branchNames: string[] = await git.listBranches({ dir: path });
+    return branchNames.map(branchName => new Branch(branchName));
   }
 }

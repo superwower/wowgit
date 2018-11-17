@@ -10,37 +10,35 @@
     "build:clean": "rm -rf client/.next",
     "clean": "rm -rf node_modules client/.next",
     "start": "NODE_ENV=production ts-node server/index.ts",
-    "test": "npm run jest",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "format": "prettier --list-different \"{**/*,*}.{js,ts,jsx,tsx,json,graphql}\"",
     "format:fix": "prettier --write \"{**/*,*}.{js,ts,jsx,tsx,json,graphql}\"",
     "lint": "npm run format && tslint -c tslint.json ./{*,**/*}.{ts,tsx}",
-    "jest": "jest",
     "coverage": "jest --coverage"
   },
   "jest": {
     "globals": {
       "ts-jest": {
-        "enableTsDiagnostics": true,
-        "skipBabel": true
+        "diagnostics": true
       }
-    },
-    "transform": {
-      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
     "moduleFileExtensions": [
-      "ts",
-      "tsx",
       "js",
+      "json",
       "jsx",
-      "json"
+      "ts",
+      "tsx"
     ],
     "testURL": "http://localhost/",
     "collectCoverageFrom": [
       "**/*.{ts,tsx}",
       "!**/*.d.ts",
       "!**/*.{test,spec}.{ts,tsx}"
-    ]
+    ],
+    "preset": "ts-jest",
+    "testMatch": null
   },
   "repository": {
     "type": "git",
@@ -62,6 +60,7 @@
     "@types/nodegit": "^0.22.3",
     "@zeit/next-typescript": "^1.1.1",
     "apollo-boost": "^0.1.15",
+    "apollo-link-schema": "^1.1.1",
     "autoprefixer": "^9.0.0",
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-wrap-in-js": "^1.1.1",
@@ -83,14 +82,11 @@
     "react": "^16.4.1",
     "react-apollo": "^2.1.11",
     "react-dom": "^16.4.1",
-    "react-redux": "^5.0.7",
-    "recompose": "^0.30.0",
-    "redux": "^4.0.0",
-    "redux-aggregate": "^1.4.18",
-    "redux-devtools-extension": "^2.13.5",
+    "recompose": "^0.28.2",
     "sass-loader": "^7.0.3",
     "ts-node": "^7.0.0",
-    "typescript": "^3.0.1"
+    "typescript": "^3.0.1",
+    "waait": "^1.0.2"
   },
   "devDependencies": {
     "@types/jest": "23.3.9",
