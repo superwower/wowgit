@@ -56,7 +56,7 @@
   "homepage": "https://github.com/superwower/wowgit#readme",
   "dependencies": {
     "@types/classnames": "^2.2.6",
-    "@types/next": "^7.0.2",
+    "@types/next": "^8.0.0",
     "@types/nodegit": "^0.22.3",
     "@zeit/next-typescript": "^1.1.1",
     "apollo-boost": "^0.1.15",
@@ -74,7 +74,7 @@
     "graphql-tools": "^4.0.0",
     "isomorphic-git": "^0.44.0",
     "isomorphic-unfetch": "^3.0.0",
-    "next": "^7.0.2",
+    "next": "^8.0.0",
     "node-sass": "^4.9.2",
     "postcss-easy-import": "^3.0.0",
     "postcss-loader": "^3.0.0",
