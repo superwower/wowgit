@@ -1,4 +1,4 @@
-FROM node:8.14.0-alpine
+FROM node:8.17.0-alpine
 ENV APP_DIR /opt/wowgit
 
 RUN mkdir ${APP_DIR}
