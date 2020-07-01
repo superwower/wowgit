@@ -64,7 +64,7 @@
     "autoprefixer": "^9.0.0",
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-wrap-in-js": "^1.1.1",
-    "bulma": "^0.7.1",
+    "bulma": "^0.9.0",
     "classnames": "^2.2.6",
     "fastify": "^1.7.0",
     "fastify-graphql": "^4.0.0",
