@@ -75,7 +75,7 @@
     "isomorphic-git": "^0.44.0",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^7.0.2",
-    "node-sass": "^4.9.2",
+    "node-sass": "^6.0.0",
     "postcss-easy-import": "^3.0.0",
     "postcss-loader": "^3.0.0",
     "raw-loader": "^0.5.1",
@@ -94,7 +94,7 @@
     "prettier": "1.15.3",
     "react-test-renderer": "16.6.3",
     "ts-jest": "23.10.5",
-    "ts-node-dev": "1.0.0-pre.31",
+    "ts-node-dev": "1.1.7",
     "tslint": "5.11.0",
     "tslint-config-prettier": "1.17.0"
   }
