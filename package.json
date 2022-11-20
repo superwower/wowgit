@@ -57,7 +57,7 @@
   "dependencies": {
     "@types/classnames": "^2.2.6",
     "@types/next": "^7.0.2",
-    "@types/nodegit": "^0.22.3",
+    "@types/nodegit": "^0.28.0",
     "@zeit/next-typescript": "^1.1.1",
     "apollo-boost": "^0.1.15",
     "apollo-link-schema": "^1.1.1",
