@@ -56,7 +56,7 @@
   "homepage": "https://github.com/superwower/wowgit#readme",
   "dependencies": {
     "@types/classnames": "^2.2.6",
-    "@types/next": "^7.0.2",
+    "@types/next": "^9.0.0",
     "@types/nodegit": "^0.22.3",
     "@zeit/next-typescript": "^1.1.1",
     "apollo-boost": "^0.1.15",
